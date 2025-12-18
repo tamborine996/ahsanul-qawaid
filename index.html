@@ -1977,17 +1977,20 @@
             const cards = container.querySelectorAll('.card');
 
             cards.forEach(card => {
-                // Tap to play sound (or show transliteration if no Arabic voice)
+                // Tap to play sound
                 card.addEventListener('click', (e) => {
                     if (!card.classList.contains('pressing')) {
                         const arabic = card.dataset.arabic;
-                        if (arabic && canSpeakArabic()) {
-                            // Play audio
+                        if (arabic && window.speechSynthesis) {
+                            // Play audio - browser will use best available voice
                             speakArabic(arabic);
                             card.classList.add('playing');
                             setTimeout(() => card.classList.remove('playing'), 300);
+                            // Also briefly show transliteration as visual feedback
+                            card.classList.add('show-translit');
+                            setTimeout(() => card.classList.remove('show-translit'), 1500);
                         } else {
-                            // Fallback: show transliteration
+                            // No TTS: show transliteration only
                             card.classList.toggle('show-translit');
                             if (card.classList.contains('show-translit')) {
                                 setTimeout(() => card.classList.remove('show-translit'), 2000);
@@ -2022,10 +2025,21 @@
                 }, { passive: true });
 
                 card.addEventListener('touchend', (e) => {
-                    if (!hasMoved) {
-                        e.preventDefault();
-                    }
+                    const wasQuickTap = !hasMoved && pressTimer; // Timer still running = quick tap
                     endPress(card);
+
+                    if (wasQuickTap) {
+                        e.preventDefault(); // Prevent ghost click
+                        // Handle tap - play sound
+                        const arabic = card.dataset.arabic;
+                        if (arabic && window.speechSynthesis) {
+                            speakArabic(arabic);
+                            card.classList.add('playing');
+                            setTimeout(() => card.classList.remove('playing'), 300);
+                            card.classList.add('show-translit');
+                            setTimeout(() => card.classList.remove('show-translit'), 1500);
+                        }
+                    }
                 });
                 card.addEventListener('touchcancel', () => cancelPress(card));
             });
