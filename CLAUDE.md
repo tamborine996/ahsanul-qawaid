@@ -7,7 +7,8 @@ Interactive Qaida app for a 6-year-old learning Arabic (non-native speaker) to p
 ## Key Decisions
 
 - **Single HTML file** - No build process, just serve and use
-- **No progress tracking** - Fresh each session, per user preference
+- **Progress tracking** - Completed lessons saved to localStorage
+- **Tap-to-reveal transliteration** - Hidden by default so child learns Arabic, not English
 - **Long-press to mark practice items** - Visual bookmark for items child struggles with
 - **RTL layout** - Arabic reads right-to-left
 - **Removed letter forms lesson** - User didn't want isolated/initial/medial/final forms displayed
@@ -21,7 +22,7 @@ Full curriculum has 29 lessons (source: equranschool.com):
 - Lessons 10-19: Madd, Sukoon, Leen letters
 - Lessons 20-29: Tashdeed, Shaddah combinations, advanced rules
 
-**Currently implemented:** Lessons 1, 4-9 equivalent (letters + harakat + tanween)
+**Currently implemented:** Full curriculum - Lessons 3-30 (all content from physical book)
 
 ## Audio Resources Found
 
@@ -37,7 +38,15 @@ Note: Licensing unclear for most resources. For proper tajweed pronunciation, re
 - Uses Google Fonts: Amiri (Arabic), Quicksand (UI)
 - Color scheme: Teal/gold/coral Islamic-inspired palette
 - Long press duration: 500ms
-- Practice items stored in JavaScript Set (not persisted)
+- Practice items stored in JavaScript Set (session only)
+- Progress tracking via localStorage
+- Chunk size: 10 exercises per page
+- Auto-hide transliteration after 2 seconds
+
+## Deployment
+
+- **Live URL:** https://tamborine996.github.io/ahsanul-qawaid/
+- **Repository:** https://github.com/tamborine996/ahsanul-qawaid
 
 ## Session History
 
@@ -46,3 +55,14 @@ Note: Licensing unclear for most resources. For proper tajweed pronunciation, re
 - Implemented long-press practice marking
 - Fixed RTL direction for Arabic content
 - Added tanween lessons per user request
+
+**2025-12-18:** Full curriculum implementation
+- Analyzed 27 WhatsApp images of physical Ahsanul Qawaid book
+- Implemented all 28 lessons (3-30) with complete exercise data
+- Added tap-to-reveal transliteration (hidden by default per user request)
+- Added Practice Mode with fullscreen cycling navigation
+- Added shuffle mode for randomizing exercises
+- Added chunked exercises (10 per page with pagination)
+- Added child-friendly "kidTip" explanations for each lesson
+- Added progress tracking via localStorage
+- Deployed to GitHub Pages
