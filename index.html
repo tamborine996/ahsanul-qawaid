@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1A6B6B">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Ahsanul Qawaid</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -586,18 +592,59 @@
             color: var(--text-muted);
         }
 
-        .practice-card .unmark-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--coral-soft);
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.7rem;
-            color: var(--coral);
+        .practice-card-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .practice-action-btn {
+            background: var(--bg-warm);
+            border: 2px solid transparent;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .practice-action-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .practice-action-btn.speaker {
+            background: var(--teal-light);
+            color: white;
+        }
+
+        .practice-action-btn.speaker:hover {
+            background: var(--teal-deep);
+        }
+
+        .practice-action-btn.reveal {
+            background: var(--gold-light);
+            color: var(--navy);
+        }
+
+        .practice-action-btn.reveal:hover {
+            background: var(--gold);
+        }
+
+        .practice-action-btn.remove {
+            background: white;
+            color: var(--coral);
+            border-color: var(--coral-soft);
+        }
+
+        .practice-action-btn.remove:hover {
+            background: var(--coral-soft);
         }
 
         .practice-nav {
@@ -730,10 +777,358 @@
         .card:nth-child(6) { animation-delay: 0.12s; }
         .card:nth-child(7) { animation-delay: 0.14s; }
         .card:nth-child(8) { animation-delay: 0.16s; }
+
+        /* ==================== */
+        /* ONBOARDING OVERLAY   */
+        /* ==================== */
+        .onboarding-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 107, 107, 0.95);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .onboarding-overlay.hidden {
+            display: none;
+        }
+
+        .onboarding-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .onboarding-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .onboarding-card h2 {
+            color: var(--teal-deep);
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .onboarding-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .onboarding-instructions {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .instruction {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-warm);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .instruction-icon {
+            font-size: 1.5rem;
+        }
+
+        .onboarding-start {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            color: var(--navy);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .onboarding-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(212, 168, 83, 0.4);
+        }
+
+        /* ==================== */
+        /* CELEBRATION OVERLAY  */
+        /* ==================== */
+        .celebration-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(26, 107, 107, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .celebration-overlay.show {
+            display: flex;
+        }
+
+        .celebration-content {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        .celebration-stars {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .celebration-content h2 {
+            color: var(--teal-deep);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .celebration-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .celebration-btn {
+            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ==================== */
+        /* LESSON GROUPS        */
+        /* ==================== */
+        .lesson-groups {
+            padding: 0.5rem 1rem;
+        }
+
+        .lesson-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .lesson-group-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--teal-deep);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .lesson-group-header:hover {
+            background: var(--teal-light);
+        }
+
+        .lesson-group-icon {
+            font-size: 1.25rem;
+            margin-right: 0.5rem;
+        }
+
+        .lesson-group-progress {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .lesson-group-items {
+            display: none;
+            padding: 0.5rem;
+            background: rgba(255,255,255,0.5);
+            border-radius: 0 0 12px 12px;
+            margin-top: -8px;
+            padding-top: 16px;
+        }
+
+        .lesson-group.expanded .lesson-group-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .lesson-group-items .lesson-tab {
+            flex: 0 0 auto;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+        }
+
+        /* ==================== */
+        /* CARD ICONS           */
+        /* ==================== */
+        .card-actions {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .card:hover .card-actions {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .card-icon:hover {
+            transform: scale(1.15);
+        }
+
+        .card-icon.speaker {
+            background: var(--teal-light);
+            color: white;
+        }
+
+        .card-icon.speaker:hover {
+            background: var(--teal-deep);
+        }
+
+        .card-icon.bookmark {
+            background: var(--bg-warm);
+            color: var(--text-muted);
+        }
+
+        .card-icon.bookmark:hover {
+            background: var(--gold-light);
+            color: var(--navy);
+        }
+
+        .card-icon.bookmark.active {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        /* Remove old pressing ring animation */
+        .card::after {
+            display: none;
+        }
+
+        /* Progress bar in header */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar {
+            width: 100px;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
 <body>
     <div class="pattern-bg"></div>
+
+    <!-- Onboarding Overlay -->
+    <div class="onboarding-overlay" id="onboarding">
+        <div class="onboarding-card">
+            <div class="onboarding-icon">📖</div>
+            <h2>Welcome to Ahsanul Qawaid!</h2>
+            <p class="onboarding-subtitle">Learn to read Arabic, one letter at a time</p>
+
+            <div class="onboarding-instructions">
+                <div class="instruction">
+                    <span class="instruction-icon">👆</span>
+                    <span>Tap a card to see how it sounds</span>
+                </div>
+                <div class="instruction">
+                    <span class="instruction-icon">🔊</span>
+                    <span>Tap the speaker to hear it</span>
+                </div>
+                <div class="instruction">
+                    <span class="instruction-icon">⭐</span>
+                    <span>Tap the star to save for practice</span>
+                </div>
+            </div>
+
+            <button class="onboarding-start" id="startLearning">
+                Let's Start! ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- Celebration Overlay -->
+    <div class="celebration-overlay" id="celebration">
+        <div class="celebration-content">
+            <div class="celebration-stars">⭐ 🌟 ⭐</div>
+            <h2>Great Job!</h2>
+            <p id="celebrationMessage">You completed this lesson!</p>
+            <button class="celebration-btn" id="celebrationClose">Keep Going! 🚀</button>
+        </div>
+        <div class="confetti" id="confetti"></div>
+    </div>
 
     <header class="header">
         <div class="header-content">
@@ -761,7 +1156,7 @@
     </main>
 
     <footer class="footer">
-        <p>Tap to hear · Hold to mark for practice</p>
+        <p>🔊 = hear · ⭐ = save for practice · tap = see pronunciation</p>
     </footer>
 
     <!-- Practice Mode Overlay -->
@@ -773,10 +1168,13 @@
         </div>
         <div class="practice-content">
             <div class="practice-card" id="practiceCard">
-                <button class="unmark-btn" id="unmarkBtn">Remove ✕</button>
                 <div class="arabic" id="practiceArabic"></div>
                 <div class="translit" id="practiceTranslit"></div>
-                <div class="tap-hint">Tap to reveal pronunciation</div>
+                <div class="practice-card-actions">
+                    <button class="practice-action-btn speaker" id="practiceSpeaker" title="Hear sound">🔊 Hear</button>
+                    <button class="practice-action-btn reveal" id="practiceReveal" title="Show transliteration">👁️ Show</button>
+                    <button class="practice-action-btn remove" id="unmarkBtn" title="Remove from practice">✕ Remove</button>
+                </div>
             </div>
         </div>
         <div class="practice-nav">
@@ -1626,7 +2024,7 @@
         // APP STATE
         // =====================================================
 
-        let currentLesson = 3;
+        let currentLesson = 1;
         let practiceItems = new Set();
         let shuffleMode = false;
         let completedLessons = new Set();
@@ -1652,6 +2050,66 @@
             renderLesson(currentLesson);
             setupEventListeners();
             loadProgress();
+            checkOnboarding();
+            registerServiceWorker();
+        }
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(() => console.log('Service Worker registered'))
+                    .catch((err) => console.log('Service Worker registration failed:', err));
+            }
+        }
+
+        // =====================================================
+        // ONBOARDING
+        // =====================================================
+
+        function checkOnboarding() {
+            const hasSeenOnboarding = localStorage.getItem('qaidaOnboarding');
+            if (!hasSeenOnboarding) {
+                document.getElementById('onboarding').classList.remove('hidden');
+            } else {
+                document.getElementById('onboarding').classList.add('hidden');
+            }
+
+            // Setup start button
+            document.getElementById('startLearning').addEventListener('click', () => {
+                localStorage.setItem('qaidaOnboarding', 'true');
+                document.getElementById('onboarding').classList.add('hidden');
+            });
+        }
+
+        // =====================================================
+        // CELEBRATION
+        // =====================================================
+
+        function showCelebration(lessonNum) {
+            const overlay = document.getElementById('celebration');
+            const message = document.getElementById('celebrationMessage');
+            const confettiContainer = document.getElementById('confetti');
+
+            message.textContent = `You completed Lesson ${lessonNum}: ${lessons[lessonNum].title}!`;
+
+            // Generate confetti
+            confettiContainer.innerHTML = '';
+            const colors = ['#E07A5F', '#D4A853', '#2A9D8F', '#1A6B6B', '#264653'];
+            for (let i = 0; i < 50; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + '%';
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confettiContainer.appendChild(piece);
+            }
+
+            overlay.classList.add('show');
+        }
+
+        function hideCelebration() {
+            document.getElementById('celebration').classList.remove('show');
         }
 
         function loadProgress() {
@@ -1681,16 +2139,53 @@
         // LESSON NAVIGATION
         // =====================================================
 
+        // Lesson groups for navigation
+        const lessonGroups = [
+            { name: 'Letters', icon: '🔤', lessons: [1] },
+            { name: 'Basic Vowels', icon: '📖', lessons: [2, 3, 4] },
+            { name: 'Tanween', icon: '✨', lessons: [5, 6, 7] },
+            { name: 'Madd (Stretching)', icon: '〰️', lessons: [8, 9, 10, 11, 12, 13, 14] },
+            { name: 'Sukoon & Leen', icon: '⭕', lessons: [15, 16, 17] },
+            { name: 'Shaddah', icon: '💪', lessons: [18, 19] },
+            { name: 'Advanced Rules', icon: '🎓', lessons: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29] }
+        ];
+
         function renderLessonNav() {
             const nav = document.getElementById('lessonsNav');
-            const lessonNums = Object.keys(lessons).map(Number).sort((a, b) => a - b);
 
-            nav.innerHTML = lessonNums.map(num => `
-                <button class="lesson-tab ${num === currentLesson ? 'active' : ''} ${completedLessons.has(num) ? 'completed' : ''}"
-                        data-lesson="${num}">
-                    ${num}. ${lessons[num].title}
-                </button>
-            `).join('');
+            nav.innerHTML = `<div class="lesson-groups">${lessonGroups.map((group, groupIdx) => {
+                const completedInGroup = group.lessons.filter(l => completedLessons.has(l)).length;
+                const totalInGroup = group.lessons.length;
+                const isCurrentGroupActive = group.lessons.includes(currentLesson);
+
+                return `
+                    <div class="lesson-group ${isCurrentGroupActive ? 'expanded' : ''}" data-group="${groupIdx}">
+                        <div class="lesson-group-header">
+                            <span>
+                                <span class="lesson-group-icon">${group.icon}</span>
+                                ${group.name}
+                            </span>
+                            <span class="lesson-group-progress">${completedInGroup}/${totalInGroup} ✓</span>
+                        </div>
+                        <div class="lesson-group-items">
+                            ${group.lessons.map(num => `
+                                <button class="lesson-tab ${num === currentLesson ? 'active' : ''} ${completedLessons.has(num) ? 'completed' : ''}"
+                                        data-lesson="${num}">
+                                    ${lessons[num].title}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('')}</div>`;
+
+            // Setup group toggle handlers
+            nav.querySelectorAll('.lesson-group-header').forEach(header => {
+                header.addEventListener('click', (e) => {
+                    const group = header.closest('.lesson-group');
+                    group.classList.toggle('expanded');
+                });
+            });
         }
 
         function updateLessonNavProgress() {
@@ -1811,10 +2306,17 @@
 
             // Setup complete button
             document.getElementById('completeBtn').addEventListener('click', () => {
+                const wasAlreadyComplete = completedLessons.has(lessonNum);
                 completedLessons.add(lessonNum);
                 saveProgress();
                 updateLessonNavProgress();
+                renderLessonNav(); // Re-render to update group progress counts
                 document.getElementById('completeBtn').textContent = '✓ Completed - Review Again';
+
+                // Show celebration only on first completion
+                if (!wasAlreadyComplete) {
+                    showCelebration(lessonNum);
+                }
             });
         }
 
@@ -1886,9 +2388,12 @@
             return `
                 <div class="card ${isExercise ? 'exercise-card' : ''} ${needsPractice ? 'needs-practice' : ''}"
                      data-id="${id}" data-arabic="${arabic}" data-translit="${translit}">
+                    <div class="card-actions">
+                        <button class="card-icon speaker" title="Hear sound">🔊</button>
+                        <button class="card-icon bookmark ${needsPractice ? 'active' : ''}" title="Save for practice">⭐</button>
+                    </div>
                     <div class="arabic">${arabic}</div>
                     <div class="translit">${translit}</div>
-                    <div class="practice-dot"></div>
                 </div>
             `;
         }
@@ -1977,41 +2482,50 @@
             const cards = container.querySelectorAll('.card');
 
             cards.forEach(card => {
-                // Tap to play sound
-                card.addEventListener('click', (e) => {
-                    if (!card.classList.contains('pressing')) {
+                // Speaker icon - plays audio
+                const speakerBtn = card.querySelector('.card-icon.speaker');
+                if (speakerBtn) {
+                    speakerBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         const arabic = card.dataset.arabic;
                         if (arabic && window.speechSynthesis) {
-                            // Play audio - browser will use best available voice
                             speakArabic(arabic);
                             card.classList.add('playing');
                             setTimeout(() => card.classList.remove('playing'), 300);
-                            // Also briefly show transliteration as visual feedback
-                            card.classList.add('show-translit');
-                            setTimeout(() => card.classList.remove('show-translit'), 1500);
-                        } else {
-                            // No TTS: show transliteration only
-                            card.classList.toggle('show-translit');
-                            if (card.classList.contains('show-translit')) {
-                                setTimeout(() => card.classList.remove('show-translit'), 2000);
-                            }
                         }
+                    });
+                }
+
+                // Bookmark icon - toggles practice
+                const bookmarkBtn = card.querySelector('.card-icon.bookmark');
+                if (bookmarkBtn) {
+                    bookmarkBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        togglePractice(card);
+                        bookmarkBtn.classList.toggle('active', practiceItems.has(card.dataset.id));
+                    });
+                }
+
+                // Tap card itself - shows transliteration (safe exploration)
+                card.addEventListener('click', (e) => {
+                    // Ignore if clicking on icons
+                    if (e.target.closest('.card-actions')) return;
+
+                    card.classList.toggle('show-translit');
+                    if (card.classList.contains('show-translit')) {
+                        setTimeout(() => card.classList.remove('show-translit'), 2000);
                     }
                 });
 
-                // Long press for practice marking
-                card.addEventListener('mousedown', (e) => startPress(card, e));
-                card.addEventListener('mouseup', () => endPress(card));
-                card.addEventListener('mouseleave', () => cancelPress(card));
-
+                // Touch handling for scroll detection
                 let touchStartX, touchStartY, hasMoved;
 
                 card.addEventListener('touchstart', (e) => {
+                    if (e.target.closest('.card-actions')) return;
                     const touch = e.touches[0];
                     touchStartX = touch.clientX;
                     touchStartY = touch.clientY;
                     hasMoved = false;
-                    startPress(card, e);
                 }, { passive: true });
 
                 card.addEventListener('touchmove', (e) => {
@@ -2020,28 +2534,17 @@
                     const deltaY = Math.abs(touch.clientY - touchStartY);
                     if (deltaX > 10 || deltaY > 10) {
                         hasMoved = true;
-                        cancelPress(card);
                     }
                 }, { passive: true });
 
                 card.addEventListener('touchend', (e) => {
-                    const wasQuickTap = !hasMoved && pressTimer; // Timer still running = quick tap
-                    endPress(card);
+                    if (e.target.closest('.card-actions')) return;
+                    if (hasMoved) return; // Was a scroll, not a tap
 
-                    if (wasQuickTap) {
-                        e.preventDefault(); // Prevent ghost click
-                        // Handle tap - play sound
-                        const arabic = card.dataset.arabic;
-                        if (arabic && window.speechSynthesis) {
-                            speakArabic(arabic);
-                            card.classList.add('playing');
-                            setTimeout(() => card.classList.remove('playing'), 300);
-                            card.classList.add('show-translit');
-                            setTimeout(() => card.classList.remove('show-translit'), 1500);
-                        }
-                    }
+                    // Show transliteration on tap
+                    card.classList.add('show-translit');
+                    setTimeout(() => card.classList.remove('show-translit'), 2000);
                 });
-                card.addEventListener('touchcancel', () => cancelPress(card));
             });
         }
 
@@ -2226,12 +2729,26 @@
             document.getElementById('practicePrev').addEventListener('click', practicePrev);
             document.getElementById('unmarkBtn').addEventListener('click', unmarkCurrentPractice);
 
-            // Tap practice card to show transliteration
-            document.getElementById('practiceCard').addEventListener('click', (e) => {
-                if (e.target.id !== 'unmarkBtn') {
-                    const translit = document.getElementById('practiceTranslit');
-                    translit.style.opacity = translit.style.opacity === '1' ? '0' : '1';
+            // Practice mode - speaker button
+            document.getElementById('practiceSpeaker').addEventListener('click', () => {
+                const arabic = document.getElementById('practiceArabic').textContent;
+                if (arabic && window.speechSynthesis) {
+                    speakArabic(arabic);
                 }
+            });
+
+            // Practice mode - reveal button
+            document.getElementById('practiceReveal').addEventListener('click', () => {
+                const translit = document.getElementById('practiceTranslit');
+                translit.style.opacity = translit.style.opacity === '1' ? '0' : '1';
+            });
+
+            // Tap practice card to toggle transliteration
+            document.getElementById('practiceCard').addEventListener('click', (e) => {
+                // Ignore clicks on action buttons
+                if (e.target.closest('.practice-card-actions')) return;
+                const translit = document.getElementById('practiceTranslit');
+                translit.style.opacity = translit.style.opacity === '1' ? '0' : '1';
             });
 
             // Keyboard navigation in practice mode
@@ -2250,6 +2767,9 @@
                     translit.style.opacity = translit.style.opacity === '1' ? '0' : '1';
                 }
             });
+
+            // Celebration close
+            document.getElementById('celebrationClose').addEventListener('click', hideCelebration);
         }
 
         // =====================================================

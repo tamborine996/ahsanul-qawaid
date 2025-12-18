@@ -1,0 +1,21 @@
+{
+  "name": "Ahsanul Qawaid",
+  "short_name": "Qaida",
+  "description": "Learn to read Arabic with interactive lessons",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF8F3",
+  "theme_color": "#1A6B6B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231A6B6B' width='100' height='100' rx='20'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='%23D4A853' font-family='serif'>ا</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "kids"],
+  "lang": "en",
+  "dir": "ltr"
+}
