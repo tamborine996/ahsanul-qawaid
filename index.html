@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ahsanul Qawaid</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-cream: #FDF8F3;
+            --bg-warm: #F9F1E8;
+            --teal-deep: #1A6B6B;
+            --teal-light: #2A9D8F;
+            --gold: #D4A853;
+            --gold-light: #E8C97A;
+            --coral: #E07A5F;
+            --coral-soft: #F2A999;
+            --navy: #264653;
+            --text-dark: #2C3E50;
+            --text-muted: #6B7C8A;
+            --white: #FFFFFF;
+            --shadow-soft: 0 4px 20px rgba(26, 107, 107, 0.1);
+            --shadow-lifted: 0 8px 32px rgba(26, 107, 107, 0.15);
+            --radius-soft: 16px;
+            --radius-round: 24px;
+
+            /* Harakat colors */
+            --fatha-color: #E53935;
+            --kasra-color: #43A047;
+            --damma-color: #1E88E5;
+            --sukoon-color: #8E24AA;
+            --shadda-color: #F4511E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Geometric Pattern Background */
+        .pattern-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            background-image:
+                radial-gradient(circle at 20% 80%, var(--gold-light) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, var(--teal-light) 1px, transparent 1px);
+            background-size: 60px 60px, 80px 80px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Amiri', serif;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .logo-text h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .shuffle-btn, .practice-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            color: var(--white);
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .shuffle-btn:hover, .practice-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .shuffle-btn.active {
+            background: var(--gold);
+        }
+
+        .practice-btn {
+            background: var(--coral);
+        }
+
+        .practice-btn .count {
+            background: var(--white);
+            color: var(--coral);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .practice-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Lesson Navigation */
+        .lessons-nav {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .lesson-tab {
+            padding: 0.5rem 0.8rem;
+            border: none;
+            background: var(--white);
+            border-radius: var(--radius-round);
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+        }
+
+        .lesson-tab:hover {
+            background: var(--bg-warm);
+            color: var(--teal-deep);
+            transform: translateY(-2px);
+        }
+
+        .lesson-tab.active {
+            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
+            color: var(--white);
+        }
+
+        .lesson-tab.completed::after {
+            content: '✓';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--teal-light);
+            color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Lesson Header */
+        .lesson-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .lesson-header h2 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .lesson-header .arabic-title {
+            font-family: 'Amiri', serif;
+            font-size: 1.75rem;
+            color: var(--teal-deep);
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-header .description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 500px;
+            margin: 0 auto 0.75rem;
+        }
+
+        .lesson-header .kid-tip {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+            color: var(--navy);
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-soft);
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Symbol intro card */
+        .symbol-card {
+            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
+            color: var(--white);
+            border-radius: var(--radius-soft);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .symbol-card .symbol {
+            font-family: 'Amiri', serif;
+            font-size: 3rem;
+            margin: 0.5rem 0;
+        }
+
+        .symbol-card .symbol .haraka-fatha { color: #FFCDD2; }
+        .symbol-card .symbol .haraka-kasra { color: #C8E6C9; }
+        .symbol-card .symbol .haraka-damma { color: #BBDEFB; }
+
+        .symbol-card p {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        /* Section headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bg-warm);
+        }
+
+        .section-header h3 {
+            font-size: 1rem;
+            color: var(--navy);
+        }
+
+        .section-header .chunk-nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .chunk-nav button {
+            background: var(--bg-warm);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .chunk-nav button:hover:not(:disabled) {
+            background: var(--teal-light);
+            color: white;
+        }
+
+        .chunk-nav button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.75rem;
+            direction: rtl;
+        }
+
+        .card-grid.exercise-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+
+        /* Individual Card */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-soft);
+            padding: 1rem 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--teal-light), var(--gold));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        /* Needs Practice State */
+        .card.needs-practice {
+            background: linear-gradient(135deg, #FFF5F3 0%, #FFEBE6 100%);
+            border: 2px solid var(--coral);
+        }
+
+        .card.needs-practice::before {
+            opacity: 1;
+            background: linear-gradient(90deg, var(--coral), var(--coral-soft));
+        }
+
+        .card.needs-practice::after {
+            content: '●';
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            color: var(--coral);
+            font-size: 0.6rem;
+        }
+
+        /* Long Press Visual Feedback */
+        .card.pressing {
+            transform: scale(0.96);
+        }
+
+        .press-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: var(--coral);
+            width: 0;
+            transition: width 0.5s linear;
+        }
+
+        .card.pressing .press-indicator {
+            width: 100%;
+        }
+
+        /* Arabic text in cards */
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 2.5rem;
+            color: var(--navy);
+            line-height: 1.3;
+            direction: rtl;
+        }
+
+        .card.exercise-card .arabic {
+            font-size: 2rem;
+        }
+
+        .card.needs-practice .arabic {
+            color: var(--coral);
+        }
+
+        /* Harakat coloring */
+        .haraka-fatha { color: var(--fatha-color); }
+        .haraka-kasra { color: var(--kasra-color); }
+        .haraka-damma { color: var(--damma-color); }
+        .haraka-sukoon { color: var(--sukoon-color); }
+        .haraka-shadda { color: var(--shadda-color); }
+
+        /* Transliteration (hidden by default) */
+        .translit {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            height: 1.2em;
+        }
+
+        .card.show-translit .translit {
+            opacity: 1;
+        }
+
+        /* ==================== */
+        /* PRACTICE MODE        */
+        /* ==================== */
+        .practice-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-cream);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+        }
+
+        .practice-mode.active {
+            display: flex;
+        }
+
+        .practice-header {
+            background: linear-gradient(135deg, var(--coral) 0%, var(--coral-soft) 100%);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .practice-header h2 {
+            font-size: 1.1rem;
+        }
+
+        .practice-progress {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .practice-exit {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .practice-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .practice-card {
+            background: var(--white);
+            border-radius: var(--radius-soft);
+            padding: 3rem 4rem;
+            text-align: center;
+            box-shadow: var(--shadow-lifted);
+            max-width: 90%;
+            position: relative;
+        }
+
+        .practice-card .arabic {
+            font-size: 5rem;
+        }
+
+        .practice-card .translit {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            height: auto;
+        }
+
+        .practice-card .tap-hint {
+            position: absolute;
+            bottom: 1rem;
+            left: 0;
+            right: 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .practice-card .unmark-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--coral-soft);
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            color: var(--coral);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .practice-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem;
+        }
+
+        .practice-nav button {
+            background: var(--teal-light);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .practice-nav button:hover {
+            background: var(--teal-deep);
+            transform: scale(1.1);
+        }
+
+        .practice-nav button:disabled {
+            background: var(--text-muted);
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ==================== */
+        /* LESSON COMPLETE      */
+        /* ==================== */
+        .lesson-complete-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
+            border: none;
+            border-radius: var(--radius-round);
+            color: white;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lesson-complete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lifted);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+                gap: 0.5rem;
+            }
+
+            .card-grid.exercise-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+
+            .arabic {
+                font-size: 2rem;
+            }
+
+            .card.exercise-card .arabic {
+                font-size: 1.6rem;
+            }
+
+            .practice-card .arabic {
+                font-size: 4rem;
+            }
+
+            .practice-card {
+                padding: 2rem;
+            }
+
+            .lesson-tab {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.3s ease-out backwards;
+        }
+
+        /* Stagger animation */
+        .card:nth-child(1) { animation-delay: 0.02s; }
+        .card:nth-child(2) { animation-delay: 0.04s; }
+        .card:nth-child(3) { animation-delay: 0.06s; }
+        .card:nth-child(4) { animation-delay: 0.08s; }
+        .card:nth-child(5) { animation-delay: 0.10s; }
+        .card:nth-child(6) { animation-delay: 0.12s; }
+        .card:nth-child(7) { animation-delay: 0.14s; }
+        .card:nth-child(8) { animation-delay: 0.16s; }
+    </style>
+</head>
+<body>
+    <div class="pattern-bg"></div>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">ا</div>
+                <div class="logo-text">
+                    <h1>Ahsanul Qawaid</h1>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="shuffle-btn" id="shuffleBtn" title="Shuffle exercises">
+                    <span>🔀</span> Shuffle
+                </button>
+                <button class="practice-btn" id="practiceBtn" disabled title="Practice marked items">
+                    <span>Practice</span>
+                    <span class="count" id="practiceCount">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <nav class="lessons-nav" id="lessonsNav"></nav>
+        <div id="lessonContent"></div>
+    </main>
+
+    <footer class="footer">
+        <p>Long-press any item to mark for practice</p>
+    </footer>
+
+    <!-- Practice Mode Overlay -->
+    <div class="practice-mode" id="practiceMode">
+        <div class="practice-header">
+            <h2>Practice Mode</h2>
+            <span class="practice-progress" id="practiceProgress">1 of 5</span>
+            <button class="practice-exit" id="practiceExit">Done</button>
+        </div>
+        <div class="practice-content">
+            <div class="practice-card" id="practiceCard">
+                <button class="unmark-btn" id="unmarkBtn">Remove ✕</button>
+                <div class="arabic" id="practiceArabic"></div>
+                <div class="translit" id="practiceTranslit"></div>
+                <div class="tap-hint">Tap to reveal pronunciation</div>
+            </div>
+        </div>
+        <div class="practice-nav">
+            <button id="practicePrev">←</button>
+            <button id="practiceNext">→</button>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================
+        // LESSON DATA - Complete Ahsanul Qawaid Book
+        // =====================================================
+
+        const arabicLetters = [
+            { letter: 'ا', name: 'Alif' },
+            { letter: 'ب', name: 'Ba' },
+            { letter: 'ت', name: 'Ta' },
+            { letter: 'ث', name: 'Tha' },
+            { letter: 'ج', name: 'Jim' },
+            { letter: 'ح', name: 'Ha' },
+            { letter: 'خ', name: 'Kha' },
+            { letter: 'د', name: 'Dal' },
+            { letter: 'ذ', name: 'Dhal' },
+            { letter: 'ر', name: 'Ra' },
+            { letter: 'ز', name: 'Zay' },
+            { letter: 'س', name: 'Sin' },
+            { letter: 'ش', name: 'Shin' },
+            { letter: 'ص', name: 'Sad' },
+            { letter: 'ض', name: 'Dad' },
+            { letter: 'ط', name: 'Ta' },
+            { letter: 'ظ', name: 'Dha' },
+            { letter: 'ع', name: 'Ayn' },
+            { letter: 'غ', name: 'Ghayn' },
+            { letter: 'ف', name: 'Fa' },
+            { letter: 'ق', name: 'Qaf' },
+            { letter: 'ك', name: 'Kaf' },
+            { letter: 'ل', name: 'Lam' },
+            { letter: 'م', name: 'Mim' },
+            { letter: 'ن', name: 'Nun' },
+            { letter: 'ه', name: 'Ha' },
+            { letter: 'و', name: 'Waw' },
+            { letter: 'ء', name: 'Hamza' },
+            { letter: 'ي', name: 'Ya' }
+        ];
+
+        const lessons = {
+            3: {
+                title: 'Fatha',
+                arabicTitle: 'فَتْحَة',
+                symbol: 'بَ',
+                description: 'The "a" sound - a small line above the letter',
+                kidTip: 'Like the "a" in "cat" - short and quick!',
+                haraka: 'َ',
+                sound: 'a',
+                type: 'haraka',
+                exercises: [
+                    { arabic: 'أَمَرَ', translit: 'amara' },
+                    { arabic: 'بَلَغَ', translit: 'balagha' },
+                    { arabic: 'ثَمَرَ', translit: 'thamara' },
+                    { arabic: 'جَمَعَ', translit: 'jama\'a' },
+                    { arabic: 'حَسَدَ', translit: 'hasada' },
+                    { arabic: 'ذَكَرَ', translit: 'dhakara' },
+                    { arabic: 'رَفَعَ', translit: 'rafa\'a' },
+                    { arabic: 'زَعَمَ', translit: 'za\'ama' },
+                    { arabic: 'سَرَقَ', translit: 'saraqa' },
+                    { arabic: 'صَدَقَ', translit: 'sadaqa' },
+                    { arabic: 'ضَرَبَ', translit: 'daraba' },
+                    { arabic: 'ظَلَمَ', translit: 'dhalama' },
+                    { arabic: 'عَدَلَ', translit: '\'adala' },
+                    { arabic: 'قَمَرَ', translit: 'qamara' },
+                    { arabic: 'كَسَبَ', translit: 'kasaba' },
+                    { arabic: 'وَجَدَ', translit: 'wajada' }
+                ]
+            },
+            4: {
+                title: 'Kasra',
+                arabicTitle: 'كَسْرَة',
+                symbol: 'بِ',
+                description: 'The "i" sound - a small line below the letter',
+                kidTip: 'Like the "i" in "sit" - short and quick!',
+                haraka: 'ِ',
+                sound: 'i',
+                type: 'haraka',
+                exercises: [
+                    { arabic: 'أَذِنَ', translit: 'adhina' },
+                    { arabic: 'بَقِيَ', translit: 'baqiya' },
+                    { arabic: 'حَمِدَ', translit: 'hamida' },
+                    { arabic: 'خَشِيَ', translit: 'khashiya' },
+                    { arabic: 'سَخِرَ', translit: 'sakhira' },
+                    { arabic: 'شَرِبَ', translit: 'shariba' },
+                    { arabic: 'عَجِبَ', translit: '\'ajiba' },
+                    { arabic: 'غَضِبَ', translit: 'ghadiba' },
+                    { arabic: 'كَذِبَ', translit: 'kadhiba' },
+                    { arabic: 'بَخِلَ', translit: 'bakhila' },
+                    { arabic: 'فَلِمَ', translit: 'falima' },
+                    { arabic: 'يَئِسَ', translit: 'ya\'isa' },
+                    { arabic: 'بِلَادٍ', translit: 'biladin' },
+                    { arabic: 'مَلِكٍ', translit: 'malikin' },
+                    { arabic: 'حَطِبَ', translit: 'hatiba' },
+                    { arabic: 'كَبِدَ', translit: 'kabida' },
+                    { arabic: 'عَلِمَ', translit: '\'alima' },
+                    { arabic: 'إِرَمَ', translit: 'irama' }
+                ]
+            },
+            5: {
+                title: 'Damma',
+                arabicTitle: 'ضَمَّة',
+                symbol: 'بُ',
+                description: 'The "u" sound - a small curl above the letter',
+                kidTip: 'Like the "u" in "put" - round your lips!',
+                haraka: 'ُ',
+                sound: 'u',
+                type: 'haraka',
+                exercises: [
+                    { arabic: 'جُعِلَ', translit: 'ju\'ila' },
+                    { arabic: 'خُلِقَ', translit: 'khuliqa' },
+                    { arabic: 'ذُكِرَ', translit: 'dhukira' },
+                    { arabic: 'سُئِلَ', translit: 'su\'ila' },
+                    { arabic: 'ظُلِمَ', translit: 'dhulima' },
+                    { arabic: 'مُنِعَ', translit: 'muni\'a' },
+                    { arabic: 'لُعِنَ', translit: 'lu\'ina' },
+                    { arabic: 'هُدِيَ', translit: 'hudiya' },
+                    { arabic: 'وُجِدَ', translit: 'wujida' },
+                    { arabic: 'سُقِطَ', translit: 'suqita' },
+                    { arabic: 'حُشِرَ', translit: 'hushira' },
+                    { arabic: 'صُحُفٍ', translit: 'suhufin' },
+                    { arabic: 'أُذُنٌ', translit: 'udhunun' },
+                    { arabic: 'رُبُعَ', translit: 'rubu\'a' },
+                    { arabic: 'يَرِثُ', translit: 'yarithu' },
+                    { arabic: 'يَعِدُ', translit: 'ya\'idu' }
+                ]
+            },
+            6: {
+                title: 'Fathatain',
+                arabicTitle: 'فَتْحَتَيْن',
+                symbol: 'بًا',
+                description: 'The "an" sound - double fatha, usually with alif',
+                kidTip: 'Say "an" at the end - like "ban" without the "b"!',
+                haraka: 'ً',
+                sound: 'an',
+                type: 'tanween',
+                exercises: [
+                    { arabic: 'أَبَدًا', translit: 'abadan' },
+                    { arabic: 'رَغَدًا', translit: 'raghadan' },
+                    { arabic: 'طَبَقًا', translit: 'tabaqan' },
+                    { arabic: 'جَنَفًا', translit: 'janafan' },
+                    { arabic: 'مَلِكًا', translit: 'malikan' },
+                    { arabic: 'مَثَلًا', translit: 'mathalan' },
+                    { arabic: 'عِنَبًا', translit: '\'inaban' },
+                    { arabic: 'قَصَصًا', translit: 'qasasan' },
+                    { arabic: 'لَعِبًا', translit: 'la\'iban' },
+                    { arabic: 'ثَمَنًا', translit: 'thamanan' },
+                    { arabic: 'أَسَفًا', translit: 'asafan' },
+                    { arabic: 'قَدَرًا', translit: 'qadaran' },
+                    { arabic: 'لَبَنًا', translit: 'labanan' },
+                    { arabic: 'كَذِبًا', translit: 'kadhiban' },
+                    { arabic: 'شَطَطًا', translit: 'shatatan' },
+                    { arabic: 'سُرُرًا', translit: 'sururan' },
+                    { arabic: 'رُسُلًا', translit: 'rusulan' },
+                    { arabic: 'عَلَقَةً', translit: '\'alaqatan' },
+                    { arabic: 'بَقَرَةً', translit: 'baqaratan' },
+                    { arabic: 'حَسَنَةً', translit: 'hasanatan' }
+                ]
+            },
+            7: {
+                title: 'Kasratain',
+                arabicTitle: 'كَسْرَتَيْن',
+                symbol: 'بٍ',
+                description: 'The "in" sound - double kasra below the letter',
+                kidTip: 'Say "in" at the end - like "bin" without the "b"!',
+                haraka: 'ٍ',
+                sound: 'in',
+                type: 'tanween',
+                exercises: [
+                    { arabic: 'عَمَدٍ', translit: '\'amadin' },
+                    { arabic: 'طَبَقٍ', translit: 'tabaqin' },
+                    { arabic: 'كَبَدٍ', translit: 'kabadin' },
+                    { arabic: 'عَلَقٍ', translit: '\'alaqin' },
+                    { arabic: 'مَسَدٍ', translit: 'masadin' },
+                    { arabic: 'لَهَبٍ', translit: 'lahabin' },
+                    { arabic: 'سَنَةٍ', translit: 'sanatin' },
+                    { arabic: 'نَهَرٍ', translit: 'naharin' },
+                    { arabic: 'شَجَرٍ', translit: 'shajarin' },
+                    { arabic: 'غَضَبٍ', translit: 'ghadabin' },
+                    { arabic: 'سِحْرٍ', translit: 'sihrin' },
+                    { arabic: 'كِذَبٍ', translit: 'kidhabin' },
+                    { arabic: 'خَبَرٍ', translit: 'khabarin' },
+                    { arabic: 'بَلَاغٍ', translit: 'balaghin' },
+                    { arabic: 'حُزْنٍ', translit: 'huznin' },
+                    { arabic: 'ذِكْرٍ', translit: 'dhikrin' },
+                    { arabic: 'ثَمَرَةٍ', translit: 'thamaratin' },
+                    { arabic: 'جَبَلٍ', translit: 'jabalin' }
+                ]
+            },
+            8: {
+                title: 'Dammatain',
+                arabicTitle: 'ضَمَّتَيْن',
+                symbol: 'بٌ',
+                description: 'The "un" sound - double damma above the letter',
+                kidTip: 'Say "un" at the end - like "bun" without the "b"!',
+                haraka: 'ٌ',
+                sound: 'un',
+                type: 'tanween',
+                exercises: [
+                    { arabic: 'سُرُرٌ', translit: 'sururun' },
+                    { arabic: 'أُذُنٌ', translit: 'udhunun' },
+                    { arabic: 'كُتُبٌ', translit: 'kutubun' },
+                    { arabic: 'رُسُلٌ', translit: 'rusulun' },
+                    { arabic: 'رَجُلٌ', translit: 'rajulun' },
+                    { arabic: 'جُدُدٌ', translit: 'jududun' },
+                    { arabic: 'أَحَدٌ', translit: 'ahadun' },
+                    { arabic: 'قَسَمٌ', translit: 'qasamun' },
+                    { arabic: 'بَشَرٌ', translit: 'basharun' },
+                    { arabic: 'سُنَّةٌ', translit: 'sunnatun' },
+                    { arabic: 'مَرَضٌ', translit: 'maradun' },
+                    { arabic: 'حَرَجٌ', translit: 'harajun' },
+                    { arabic: 'لَعِبٌ', translit: 'la\'ibun' },
+                    { arabic: 'حُرُمٌ', translit: 'hurumun' },
+                    { arabic: 'وَلَدٌ', translit: 'waladun' },
+                    { arabic: 'نَجْسٌ', translit: 'najsun' },
+                    { arabic: 'غُبَرَةٌ', translit: 'ghubaratun' },
+                    { arabic: 'بَقَرَةٌ', translit: 'baqaratun' }
+                ]
+            },
+            9: {
+                title: 'Madd with Alif',
+                arabicTitle: 'مَدّ بِالأَلِف',
+                symbol: 'بَا',
+                description: 'Stretching - when fatha comes before alif, stretch the "aa" sound',
+                kidTip: 'Stretch it out like "baaaa" (like a sheep)!',
+                type: 'madd',
+                letters: arabicLetters.filter(l => l.letter !== 'ا').map(l => ({
+                    arabic: l.letter + 'َا',
+                    translit: l.name.toLowerCase() + 'aa'
+                })),
+                exercises: [
+                    { arabic: 'ذَاتَ', translit: 'dhaata' },
+                    { arabic: 'خَافَ', translit: 'khaafa' },
+                    { arabic: 'كَانَ', translit: 'kaana' },
+                    { arabic: 'قَالَ', translit: 'qaala' },
+                    { arabic: 'رَانَ', translit: 'raana' },
+                    { arabic: 'تَابَ', translit: 'taaba' },
+                    { arabic: 'عَادَ', translit: '\'aada' },
+                    { arabic: 'نَارًا', translit: 'naaran' },
+                    { arabic: 'هَادٍ', translit: 'haadin' },
+                    { arabic: 'مَالِكُ', translit: 'maaliku' },
+                    { arabic: 'عَامٍ', translit: '\'aamin' },
+                    { arabic: 'ثَوَابًا', translit: 'thawaaban' },
+                    { arabic: 'آفَاقَ', translit: 'aafaaqa' },
+                    { arabic: 'يَخَافُ', translit: 'yakhaafu' },
+                    { arabic: 'أَصَابَ', translit: 'asaaba' },
+                    { arabic: 'جُنَاحَ', translit: 'junaaha' },
+                    { arabic: 'جَاعِلٌ', translit: 'jaa\'ilun' },
+                    { arabic: 'خَالِدًا', translit: 'khaalidan' },
+                    { arabic: 'كَاتِبَ', translit: 'kaatiba' },
+                    { arabic: 'عَابِدُ', translit: '\'aabidu' },
+                    { arabic: 'حَافِظُ', translit: 'haafidhu' },
+                    { arabic: 'فَوَاكِهَ', translit: 'fawaakiha' }
+                ]
+            },
+            10: {
+                title: 'Standing Fatha',
+                arabicTitle: 'فَتْحَة قَائِمَة',
+                symbol: 'بٰ',
+                description: 'A small alif above the letter - same "aa" sound as Madd with Alif',
+                kidTip: 'See the tiny stick above? Stretch it like "baaaa"!',
+                type: 'madd',
+                exercises: [
+                    { arabic: 'اٰلَ', translit: 'aala' },
+                    { arabic: 'اٰدَمَ', translit: 'aadama' },
+                    { arabic: 'اٰمَنَ', translit: 'aamana' },
+                    { arabic: 'ذٰلِكَ', translit: 'dhaalika' },
+                    { arabic: 'اٰثَرَ', translit: 'aathara' },
+                    { arabic: 'اٰخَرَ', translit: 'aakhara' },
+                    { arabic: 'سَلٰمٌ', translit: 'salaamun' },
+                    { arabic: 'حٰلًا', translit: 'haalan' },
+                    { arabic: 'مَاٰبًا', translit: 'ma\'aaban' },
+                    { arabic: 'كِتٰبٌ', translit: 'kitaabun' },
+                    { arabic: 'اٰيَةٌ', translit: 'aayatun' },
+                    { arabic: 'خَلٰئِكَ', translit: 'khalaa\'ika' },
+                    { arabic: 'رِسٰلَتٍ', translit: 'risaalatin' },
+                    { arabic: 'كَلِمٰتٍ', translit: 'kalimaatin' },
+                    { arabic: 'قٰنِتَتْ', translit: 'qaanitatun' },
+                    { arabic: 'حٰفِظٰتُ', translit: 'haafidhaatu' },
+                    { arabic: 'سَمٰوٰتٍ', translit: 'samaawaatin' }
+                ]
+            },
+            11: {
+                title: 'Standing Kasra & Inverted Damma',
+                arabicTitle: 'كَسْرَة قَائِمَة وَ ضَمَّة مَقْلُوبَة',
+                symbol: 'بِي / بُو',
+                description: 'Standing kasra (ى) = "ee" sound. Inverted damma (ۥ) = "oo" sound.',
+                kidTip: 'Tiny ya below = "ee". Tiny waw above = "oo"!',
+                type: 'madd',
+                letters: [
+                    { arabic: 'اِ', translit: 'ii' },
+                    { arabic: 'ءِ', translit: 'ii' },
+                    { arabic: 'يِ', translit: 'yii' },
+                    { arabic: 'اۤ', translit: 'ii' },
+                    { arabic: 'ءۤ', translit: 'ii' },
+                    { arabic: 'يۤ', translit: 'yii' },
+                    { arabic: 'وُ', translit: 'uu' },
+                    { arabic: 'ءُ', translit: 'uu' },
+                    { arabic: 'ٱُ', translit: 'uu' },
+                    { arabic: 'وٗ', translit: 'uu' },
+                    { arabic: 'ءٗ', translit: 'uu' },
+                    { arabic: 'ٱٗ', translit: 'uu' }
+                ],
+                exercises: [
+                    { arabic: 'إِلٰهٌ', translit: 'ilaahun' },
+                    { arabic: 'هٰذِهِ', translit: 'haadhihi' },
+                    { arabic: 'اٰيٰتِهِ', translit: 'aayaatihi' },
+                    { arabic: 'بِيَدِهِ', translit: 'biyadihi' },
+                    { arabic: 'صَاحِبَتِهِ', translit: 'saahibatihi' },
+                    { arabic: 'يَرٰهُ', translit: 'yaraahu' },
+                    { arabic: 'وَرِيَ', translit: 'wariya' },
+                    { arabic: 'كِتٰبَهُ', translit: 'kitaabahu' },
+                    { arabic: 'غَاوُنَ', translit: 'ghaawuna' },
+                    { arabic: 'دَاوُدَ', translit: 'daawuda' }
+                ]
+            },
+            12: {
+                title: 'Sukoon',
+                arabicTitle: 'سُكُون',
+                symbol: 'بْ',
+                description: 'A small circle above - the letter has no vowel, just its sound',
+                kidTip: 'See the tiny circle? Stop the sound short - no "a", "i", or "u"!',
+                haraka: 'ْ',
+                type: 'sukoon',
+                letters: arabicLetters.map(l => ({
+                    arabic: 'اَ' + l.letter + 'ْ',
+                    translit: 'a' + l.name.toLowerCase().charAt(0)
+                })),
+                exercises: [
+                    { arabic: 'أَوْهَنَ', translit: 'awhana' },
+                    { arabic: 'تَوْبَةً', translit: 'tawbatan' },
+                    { arabic: 'حَوْلَهُ', translit: 'hawlahu' },
+                    { arabic: 'خَوْفٍ', translit: 'khawfin' },
+                    { arabic: 'رَوْحٌ', translit: 'rawhun' },
+                    { arabic: 'زَوْجًا', translit: 'zawjan' },
+                    { arabic: 'سَوْفَ', translit: 'sawfa' },
+                    { arabic: 'غَوْرًا', translit: 'ghawran' },
+                    { arabic: 'فَوْتَ', translit: 'fawta' },
+                    { arabic: 'كَوْثَرَ', translit: 'kawthara' },
+                    { arabic: 'لَوْمَةَ', translit: 'lawmata' },
+                    { arabic: 'مَوْتِهَا', translit: 'mawtihaa' },
+                    { arabic: 'نَوْمٌ', translit: 'nawmun' },
+                    { arabic: 'يَوْمَ', translit: 'yawma' },
+                    { arabic: 'يَوْمِئِذٍ', translit: 'yawma\'idhin' },
+                    { arabic: 'أَوْتَادًا', translit: 'awtaadan' },
+                    { arabic: 'سَوْطَ', translit: 'sawta' },
+                    { arabic: 'قَوْلَ', translit: 'qawla' },
+                    { arabic: 'لَوْحٍ', translit: 'lawhin' },
+                    { arabic: 'صَوْمًا', translit: 'sawman' }
+                ]
+            },
+            13: {
+                title: 'Madd with Waw',
+                arabicTitle: 'مَدّ بِالوَاو',
+                symbol: 'بُو',
+                description: 'When damma comes before waw with sukoon, stretch the "oo" sound',
+                kidTip: 'Round your lips and stretch: "boooo"!',
+                type: 'madd',
+                letters: arabicLetters.filter(l => l.letter !== 'و').map(l => ({
+                    arabic: l.letter + 'ُوْ',
+                    translit: l.name.toLowerCase() + 'oo'
+                })),
+                exercises: [
+                    { arabic: 'أُوتِيَ', translit: 'ootiya' },
+                    { arabic: 'بُورِكَ', translit: 'boorika' },
+                    { arabic: 'تُورُونَ', translit: 'tooroona' },
+                    { arabic: 'وُجُوهُ', translit: 'wujoohu' },
+                    { arabic: 'حُورٌ', translit: 'hoorun' },
+                    { arabic: 'دَوْلَةً', translit: 'dawlatan' },
+                    { arabic: 'زُورًا', translit: 'zooran' },
+                    { arabic: 'يَسُومُونَ', translit: 'yasoomona' },
+                    { arabic: 'صُورٍ', translit: 'soorin' },
+                    { arabic: 'يَقُولُونَ', translit: 'yaqooloona' },
+                    { arabic: 'نُوحٌ', translit: 'noohun' },
+                    { arabic: 'قُلُوبَ', translit: 'qulooba' },
+                    { arabic: 'شُهُودٌ', translit: 'shuhoodun' },
+                    { arabic: 'قُعُودٌ', translit: 'qu\'oodun' },
+                    { arabic: 'ثُبُورًا', translit: 'thubooran' }
+                ]
+            },
+            14: {
+                title: 'Leen Letters',
+                arabicTitle: 'حُرُوف اللِّين',
+                symbol: 'يْ / وْ',
+                description: 'Ya or Waw with sukoon after fatha - makes a soft "ay" or "aw" sound',
+                kidTip: 'These make sounds like "ay" in "day" or "ow" in "how"!',
+                type: 'leen',
+                letters: arabicLetters.map(l => ({
+                    arabic: l.letter + 'َيْ',
+                    translit: l.name.toLowerCase() + 'ay'
+                })),
+                exercises: [
+                    { arabic: 'أَيْنَ', translit: 'ayna' },
+                    { arabic: 'بَيْتٌ', translit: 'baytun' },
+                    { arabic: 'اٰتَيْنَا', translit: 'aataynaa' },
+                    { arabic: 'حَيْثُ', translit: 'haythu' },
+                    { arabic: 'خَيْرٌ', translit: 'khayrun' },
+                    { arabic: 'بِدَيْنٍ', translit: 'bidaynin' },
+                    { arabic: 'قُرَيْشٍ', translit: 'qurayshin' },
+                    { arabic: 'زَيْتُونٍ', translit: 'zaytoonin' },
+                    { arabic: 'شَيْءٌ', translit: 'shay\'un' },
+                    { arabic: 'صَيْفٍ', translit: 'sayfin' },
+                    { arabic: 'ضَيْفَ', translit: 'dayfa' },
+                    { arabic: 'طَيْرَ', translit: 'tayra' },
+                    { arabic: 'عَيْنٌ', translit: '\'aynun' },
+                    { arabic: 'غَيْرِ', translit: 'ghayri' },
+                    { arabic: 'كَيْدًا', translit: 'kaydan' },
+                    { arabic: 'وَيْلٌ', translit: 'waylun' },
+                    { arabic: 'هَدَيْنَا', translit: 'hadaynaa' },
+                    { arabic: 'لَيْسَ', translit: 'laysa' }
+                ]
+            },
+            15: {
+                title: 'Madd with Ya',
+                arabicTitle: 'مَدّ بِاليَاء',
+                symbol: 'بِي',
+                description: 'When kasra comes before ya with sukoon, stretch the "ee" sound',
+                kidTip: 'Smile and stretch: "beeee"!',
+                type: 'madd',
+                letters: arabicLetters.filter(l => l.letter !== 'ي').map(l => ({
+                    arabic: l.letter + 'ِيْ',
+                    translit: l.name.toLowerCase() + 'ee'
+                })),
+                exercises: [
+                    { arabic: 'إِيتُونِي', translit: 'eetoonee' },
+                    { arabic: 'مُبِينٍ', translit: 'mubeenin' },
+                    { arabic: 'يَتِيمًا', translit: 'yateeman' },
+                    { arabic: 'كَثِيرًا', translit: 'katheeran' },
+                    { arabic: 'مَجِيدٌ', translit: 'majeedun' },
+                    { arabic: 'مُحِيطٌ', translit: 'muheetun' },
+                    { arabic: 'اٰخِيهِ', translit: 'aakheehi' },
+                    { arabic: 'نَذِيرٌ', translit: 'nadheerun' },
+                    { arabic: 'كَرِيمٌ', translit: 'kareemun' },
+                    { arabic: 'نُجَزِيَ', translit: 'nujaziya' },
+                    { arabic: 'يَسِيرًا', translit: 'yaseeran' },
+                    { arabic: 'بَصِيرًا', translit: 'baseeran' },
+                    { arabic: 'لَطِيفٌ', translit: 'lateefun' },
+                    { arabic: 'عَظِيمٌ', translit: '\'adheemun' },
+                    { arabic: 'عَلِيمٌ', translit: '\'aleemun' },
+                    { arabic: 'شَهِيدٌ', translit: 'shaheedun' },
+                    { arabic: 'لِبِثِينَ', translit: 'libitheena' }
+                ]
+            },
+            16: {
+                title: 'Sukoon Combinations',
+                arabicTitle: 'تَمَارِين السُّكُون',
+                symbol: 'اَنْ',
+                description: 'Practice reading two-letter combinations with sukoon',
+                kidTip: 'Read the first letter, then quickly add the sukoon letter!',
+                type: 'sukoon',
+                exercises: [
+                    { arabic: 'اَنْ', translit: 'an' },
+                    { arabic: 'إِذْ', translit: 'idh' },
+                    { arabic: 'اَمْ', translit: 'am' },
+                    { arabic: 'إِنْ', translit: 'in' },
+                    { arabic: 'بَلْ', translit: 'bal' },
+                    { arabic: 'تُبْ', translit: 'tub' },
+                    { arabic: 'خُذْ', translit: 'khudh' },
+                    { arabic: 'دَعْ', translit: 'da\'' },
+                    { arabic: 'ذُقْ', translit: 'dhuq' },
+                    { arabic: 'سَلْ', translit: 'sal' },
+                    { arabic: 'قَدْ', translit: 'qad' },
+                    { arabic: 'قُلْ', translit: 'qul' },
+                    { arabic: 'قُمْ', translit: 'qum' },
+                    { arabic: 'كَمْ', translit: 'kam' },
+                    { arabic: 'كُنْ', translit: 'kun' },
+                    { arabic: 'لَمْ', translit: 'lam' },
+                    { arabic: 'لَنْ', translit: 'lan' },
+                    { arabic: 'مَنْ', translit: 'man' },
+                    { arabic: 'مِنْ', translit: 'min' },
+                    { arabic: 'هَبْ', translit: 'hab' },
+                    { arabic: 'إِدْفَعْ', translit: 'idfa\'' },
+                    { arabic: 'إِذْهَبْ', translit: 'idhhab' },
+                    { arabic: 'اِنْزِلْ', translit: 'inzil' },
+                    { arabic: 'اَمْهِلْ', translit: 'amhil' },
+                    { arabic: 'اَلْقَتْ', translit: 'alqat' },
+                    { arabic: 'أَحْسِنْ', translit: 'ahsin' }
+                ]
+            },
+            17: {
+                title: 'Silent Letters',
+                arabicTitle: 'حُرُوف غَيْر مَنْطُوقَة',
+                symbol: 'عَلَى',
+                description: 'Some letters are written but not pronounced - like the alif at the end',
+                kidTip: 'See an alif at the end with no mark? Skip it!',
+                type: 'silent',
+                exercises: [
+                    { arabic: 'عَلَى', translit: '\'alaa' },
+                    { arabic: 'إِلَى', translit: 'ilaa' },
+                    { arabic: 'اُوْلَى', translit: 'oolaa' },
+                    { arabic: 'قَهْدَى', translit: 'qahdaa' },
+                    { arabic: 'أَغْنَى', translit: 'aghnaa' },
+                    { arabic: 'يَحْيَى', translit: 'yahyaa' },
+                    { arabic: 'تَرْضَى', translit: 'tardaa' },
+                    { arabic: 'مِائَةً وَانًا', translit: 'mi\'atan wa anan' },
+                    { arabic: 'مِنَ الْاُوْلَى', translit: 'minal oolaa' },
+                    { arabic: 'رَضُوا', translit: 'radoo' },
+                    { arabic: 'أَمَنُوا', translit: 'aamanoo' },
+                    { arabic: 'مَالْقَارِعَةُ', translit: 'maal qaari\'atu' },
+                    { arabic: 'تَابَا', translit: 'taabaa' },
+                    { arabic: 'قَالَا', translit: 'qaalaa' },
+                    { arabic: 'كَلَّا', translit: 'kallaa' },
+                    { arabic: 'لِيَكُونَا', translit: 'liyakoonaa' },
+                    { arabic: 'فَقُوْلَا', translit: 'faqoolaa' },
+                    { arabic: 'إِذْهَبَا', translit: 'idh-habaa' },
+                    { arabic: 'شِئْتُمَا', translit: 'shi\'tumaa' },
+                    { arabic: 'فَلَا تَقْرَبَا', translit: 'falaa taqrabaa' },
+                    { arabic: 'أَطَاعُوْنَا', translit: 'ataa\'oonaa' }
+                ]
+            },
+            18: {
+                title: 'Hamzah with Sukoon',
+                arabicTitle: 'هَمْزَة سَاكِنَة',
+                symbol: 'أْ',
+                description: 'Hamzah (ء) with sukoon makes a hiccup/glottal stop sound',
+                kidTip: 'Make a tiny hiccup sound in your throat!',
+                type: 'hamza',
+                exercises: [
+                    { arabic: 'يَأْتِيكُمْ', translit: 'ya\'teekum' },
+                    { arabic: 'وَأْمُرْ', translit: 'wa\'mur' },
+                    { arabic: 'تَأْتِيهِمْ', translit: 'ta\'teehim' },
+                    { arabic: 'مَأْوَاهُمْ', translit: 'ma\'waahum' },
+                    { arabic: 'كَأْسًا', translit: 'ka\'san' },
+                    { arabic: 'يَأْبَ', translit: 'ya\'ba' },
+                    { arabic: 'نَأْتِ', translit: 'na\'ti' },
+                    { arabic: 'قَرَأْتَ', translit: 'qara\'ta' },
+                    { arabic: 'بَأْسٍ', translit: 'ba\'sin' },
+                    { arabic: 'مَأْكُوْلٍ', translit: 'ma\'koolin' },
+                    { arabic: 'مُؤْصَدَةٌ', translit: 'mu\'sadatun' },
+                    { arabic: 'شَأْنٌ', translit: 'sha\'nun' },
+                    { arabic: 'يَأْمُرُكُمْ', translit: 'ya\'murukum' },
+                    { arabic: 'يُؤْمِنْ', translit: 'yu\'min' },
+                    { arabic: 'تُؤْثِرُونَ', translit: 'tu\'thiroon' },
+                    { arabic: 'تَأْكُلُونَ', translit: 'ta\'kuloon' },
+                    { arabic: 'يُؤْتُونَ', translit: 'yu\'toon' }
+                ]
+            },
+            19: {
+                title: 'Shaddah',
+                arabicTitle: 'شَدَّة',
+                symbol: 'بَّ',
+                description: 'A "w" shape above - double the letter (say it twice, merged together)',
+                kidTip: 'Press down harder and hold the letter longer!',
+                haraka: 'ّ',
+                type: 'shadda',
+                exercises: [
+                    { arabic: 'رَبَّ', translit: 'rabba' },
+                    { arabic: 'إِنَّ', translit: 'inna' },
+                    { arabic: 'ثُمَّ', translit: 'thumma' },
+                    { arabic: 'عَمَّ', translit: '\'amma' },
+                    { arabic: 'مَنَّ', translit: 'manna' },
+                    { arabic: 'مَدَّ', translit: 'madda' },
+                    { arabic: 'قَلَّ', translit: 'qalla' },
+                    { arabic: 'حَجَّ', translit: 'hajja' },
+                    { arabic: 'أَنَّ', translit: 'anna' },
+                    { arabic: 'شَرٍّ', translit: 'sharrin' },
+                    { arabic: 'صَلِّ', translit: 'salli' },
+                    { arabic: 'تَبَّ', translit: 'tabba' },
+                    { arabic: 'ظَنَّ', translit: 'dhanna' },
+                    { arabic: 'صَبَّ', translit: 'sabba' },
+                    { arabic: 'مَمَّ', translit: 'mamma' },
+                    { arabic: 'حُبَّا', translit: 'hubban' },
+                    { arabic: 'جَمَّا', translit: 'jamman' },
+                    { arabic: 'دِكًّا', translit: 'dikkan' },
+                    { arabic: 'شَقًّا', translit: 'shaqqan' },
+                    { arabic: 'صَفًّا', translit: 'saffan' },
+                    { arabic: 'حَقًّا', translit: 'haqqan' },
+                    { arabic: 'جَلَّ', translit: 'jalla' },
+                    { arabic: 'كُلَّ', translit: 'kulla' },
+                    { arabic: 'ظِلِّ', translit: 'dhilli' },
+                    { arabic: 'ضُرِّ', translit: 'durri' },
+                    { arabic: 'أُمَّ', translit: 'umma' }
+                ]
+            },
+            20: {
+                title: 'Shaddah Practice',
+                arabicTitle: 'تَمَارِين الشَّدَّة',
+                symbol: 'اِلَّا',
+                description: 'More practice with doubled letters in words',
+                kidTip: 'Remember: press and hold those doubled letters!',
+                type: 'shadda',
+                exercises: [
+                    { arabic: 'إِلَّا', translit: 'illaa' },
+                    { arabic: 'بَلَّا', translit: 'ballaa' },
+                    { arabic: 'كَلَّا', translit: 'kallaa' },
+                    { arabic: 'إِيَّاكَ', translit: 'iyyaaka' },
+                    { arabic: 'مِنَّا', translit: 'minnaa' },
+                    { arabic: 'أَنَّى', translit: 'annaa' },
+                    { arabic: 'حَتَّى', translit: 'hattaa' },
+                    { arabic: 'رَبِّيَ', translit: 'rabbiya' },
+                    { arabic: 'أَنِّي', translit: 'annee' },
+                    { arabic: 'لَشَتَّى', translit: 'lashattaa' },
+                    { arabic: 'صَلَّى', translit: 'sallaa' },
+                    { arabic: 'جَلْهَا', translit: 'jallahaa' },
+                    { arabic: 'زَكَّاهَا', translit: 'zakkaahaa' },
+                    { arabic: 'أَنَاْبِيَ', translit: 'anaabiya' },
+                    { arabic: 'اللهَ', translit: 'Allaaha' },
+                    { arabic: 'رَبَّنَا', translit: 'rabbanaa' },
+                    { arabic: 'فَلَمَّا', translit: 'falammaa' },
+                    { arabic: 'إِنَّمَا', translit: 'innamaa' },
+                    { arabic: 'كُنَّا', translit: 'kunnaa' },
+                    { arabic: 'إِنَّهَا', translit: 'innahaa' }
+                ]
+            },
+            21: {
+                title: 'Madd Rules',
+                arabicTitle: 'أَحْكَام المَدّ',
+                symbol: 'بَآ / بَآءْ',
+                description: 'Short Madd: stretch 2 counts. Long Madd (before sukoon/shaddah): stretch 4-5 counts.',
+                kidTip: 'Short = 1-2-stretch. Long = 1-2-3-4-stretch!',
+                type: 'madd-rules',
+                exercises: [
+                    { arabic: 'بَا', translit: 'baa (2)' },
+                    { arabic: 'بُو', translit: 'boo (2)' },
+                    { arabic: 'بِي', translit: 'bee (2)' },
+                    { arabic: 'سَا', translit: 'saa (2)' },
+                    { arabic: 'سُو', translit: 'soo (2)' },
+                    { arabic: 'سِي', translit: 'see (2)' },
+                    { arabic: 'بَآءَ', translit: 'baa\'a (4)' },
+                    { arabic: 'جَآءَ', translit: 'jaa\'a (4)' },
+                    { arabic: 'سَآءَ', translit: 'saa\'a (4)' },
+                    { arabic: 'شَآءَ', translit: 'shaa\'a (4)' },
+                    { arabic: 'مَآءَهَا', translit: 'maa\'ahaa' },
+                    { arabic: 'سُوْءَ', translit: 'soo\'a' },
+                    { arabic: 'عَطَآءَ', translit: '\'ataa\'a' },
+                    { arabic: 'غُثَآءَ', translit: 'ghuthaa\'a' },
+                    { arabic: 'نِسَآءَ', translit: 'nisaa\'a' },
+                    { arabic: 'أَدَآءَ', translit: 'adaa\'a' },
+                    { arabic: 'سَوَآءَ', translit: 'sawaa\'a' },
+                    { arabic: 'جَزَآءُ', translit: 'jazaa\'u' },
+                    { arabic: 'بَلَآءٌ', translit: 'balaa\'un' },
+                    { arabic: 'دِمَآءُكُمْ', translit: 'dimaa\'ukum' },
+                    { arabic: 'حُنَفَآءَ', translit: 'hunafaa\'a' },
+                    { arabic: 'أَوْلِيَآءُ', translit: 'awliyaa\'u' },
+                    { arabic: 'جِيْٓءَ', translit: 'jee\'a (6)' },
+                    { arabic: 'سِيْٓءَ', translit: 'see\'a (6)' },
+                    { arabic: 'يُضِيْٓءُ', translit: 'yudee\'u (6)' },
+                    { arabic: 'بَرِيْٓءٌ', translit: 'baree\'un' },
+                    { arabic: 'خَطِيْٓئَةٌ', translit: 'khatee\'atun' }
+                ]
+            },
+            22: {
+                title: 'Combined Practice 1',
+                arabicTitle: 'تَمَارِين مُرَكَّبَة ١',
+                description: 'Practice combining all the rules you\'ve learned',
+                kidTip: 'Use everything you know - take it slow!',
+                type: 'combined',
+                exercises: [
+                    { arabic: 'ضَالًّا', translit: 'daallan' },
+                    { arabic: 'حَاجَّكَ', translit: 'haajjaka' },
+                    { arabic: 'دَابَّةٍ', translit: 'daabbatin' },
+                    { arabic: 'رَادِّكَ', translit: 'raaddika' },
+                    { arabic: 'خَاصَّةً', translit: 'khaassatan' },
+                    { arabic: 'كَافَّةً', translit: 'kaaffatan' },
+                    { arabic: 'بِضَارِّهِمْ', translit: 'bidaarrihi' },
+                    { arabic: 'تَحْضُرُونَ', translit: 'tahduuroona' },
+                    { arabic: 'جَانٌّ', translit: 'jaannun' },
+                    { arabic: 'اٰمِينَ', translit: 'aameena' },
+                    { arabic: 'ظَانِّينَ', translit: 'dhaanneena' },
+                    { arabic: 'ضَالِّينَ', translit: 'daalleena' },
+                    { arabic: 'اٰلٰئُنَ', translit: 'aalaa\'una' },
+                    { arabic: 'اللهُ', translit: 'Allaahu' }
+                ]
+            },
+            23: {
+                title: 'Alif at Word End',
+                arabicTitle: 'الأَلِف فِي آخِر الكَلِمَة',
+                description: 'Practice words where alif at the end affects pronunciation',
+                kidTip: 'Watch for the alif - does it stretch or stay silent?',
+                type: 'combined',
+                exercises: [
+                    { arabic: 'عَمَّ', translit: '\'amma' },
+                    { arabic: 'عَمَّا', translit: '\'ammaa' },
+                    { arabic: 'فِيمَ', translit: 'feema' },
+                    { arabic: 'فِيمَا', translit: 'feemaa' },
+                    { arabic: 'مِمَّ', translit: 'mimma' },
+                    { arabic: 'كَانَ', translit: 'kaana' },
+                    { arabic: 'كَانَا', translit: 'kaanaa' },
+                    { arabic: 'إِنَّ', translit: 'inna' },
+                    { arabic: 'إِنَّا', translit: 'innaa' },
+                    { arabic: 'ظَنَّ', translit: 'dhanna' },
+                    { arabic: 'ظَنَّا', translit: 'dhannaa' }
+                ]
+            },
+            24: {
+                title: 'Phrase Practice 1',
+                arabicTitle: 'تَمَارِين العِبَارَات ١',
+                description: 'Practice reading longer phrases from the Quran',
+                kidTip: 'Read word by word, then put them together!',
+                type: 'phrases',
+                exercises: [
+                    { arabic: 'رَسُولُ مِنَ اللهِ', translit: 'rasoolum minAllaahi' },
+                    { arabic: 'كِتَابٌ مُبِينٌ', translit: 'kitaabum mubeen' },
+                    { arabic: 'خَيْرٌ مِنْهُ', translit: 'khayrum minhu' },
+                    { arabic: 'بِحِجَارَةٍ مِنْ سِجِّيلٍ', translit: 'bihijaaratim min sijjeel' },
+                    { arabic: 'لَوْحٍ مَحْفُوظٍ', translit: 'lawhim mahfoodh' },
+                    { arabic: 'صُحُفًا مُطَهَّرَةً', translit: 'suhufam mutahharah' },
+                    { arabic: 'عِيشَةً رَاضِيَةٍ', translit: '\'eeshatam raadiyah' },
+                    { arabic: 'جَنَّتٍ لَهُمْ', translit: 'jannatil lahum' },
+                    { arabic: 'خَيْرٌ لِّأَنْفُسِهِمْ', translit: 'khayrul li\'anfusihim' },
+                    { arabic: 'غَفُورٌ رَحِيمٌ', translit: 'ghafoorur raheem' },
+                    { arabic: 'قَوْلُوا لَهُمْ قَوْلًا مَعْرُوفًا', translit: 'qooloo lahum qawlam ma\'roofaa' },
+                    { arabic: 'لَآ إِلٰهَ إِلَّا اللهُ مُحَمَّدٌ رَسُولُ اللهِ', translit: 'laa ilaaha illAllaahu Muhammadur rasoolullaah' }
+                ]
+            },
+            25: {
+                title: 'Phrase Practice 2',
+                arabicTitle: 'تَمَارِين العِبَارَات ٢',
+                description: 'More phrase practice with connected reading',
+                kidTip: 'Connect the words smoothly when reading!',
+                type: 'phrases',
+                exercises: [
+                    { arabic: 'مِنْ مَآءٍ', translit: 'mim maa\'in' },
+                    { arabic: 'مِنْ مُثْلِهِ', translit: 'mim mithlihi' },
+                    { arabic: 'وَإِنْ مِنْ شَيْءٍ', translit: 'wa in min shay\'in' },
+                    { arabic: 'مِنْ لَدُنْهُ', translit: 'mil ladunhu' },
+                    { arabic: 'لَمْ يَكُنْ لَهُ', translit: 'lam yakul lahu' },
+                    { arabic: 'أَنْ لَمْ يَرَهُ', translit: 'al lam yarahu' },
+                    { arabic: 'مِنْ رَبِّكَ', translit: 'mir rabbika' },
+                    { arabic: 'مِنْ رَحِمَ', translit: 'mar rahima' },
+                    { arabic: 'أَنْ رَآهُ', translit: 'ar raahu' },
+                    { arabic: 'قُلْ رَبِّ', translit: 'qur rabbi' },
+                    { arabic: 'بَلْ رَفَعَ', translit: 'bar rafa\'a' },
+                    { arabic: 'عَابِدُ مَا', translit: '\'aabidu maa' },
+                    { arabic: 'وَجَدْتُمْ', translit: 'wa jadtum' },
+                    { arabic: 'وَعَلٰاتُهُمْ', translit: 'wa \'alaatuhum' },
+                    { arabic: 'وَإِنْ عُذْتُمْ', translit: 'wa in \'udtum' },
+                    { arabic: 'وَاِرْكَبْ مَعَنَا', translit: 'warkab ma\'anaa' }
+                ]
+            },
+            26: {
+                title: 'Longer Phrases',
+                arabicTitle: 'عِبَارَات طَوِيلَة',
+                description: 'Practice with longer Quranic phrases',
+                kidTip: 'Take a breath, read carefully, you can do it!',
+                type: 'phrases',
+                exercises: [
+                    { arabic: 'حُبًّا وَنَبَاتًا', translit: 'hubban wa nabaataa' },
+                    { arabic: 'إِيمَانًا وَقَالُوا', translit: 'eemaanan wa qaaloo' },
+                    { arabic: 'وَلِيًّا وَلَا نَصِيرًا', translit: 'waliyyan walaa naseeraa' },
+                    { arabic: 'مَالٌ وَلَا بَنُونَ', translit: 'maalun walaa banoon' },
+                    { arabic: 'يَوْمَئِذٍ وَاجِفَةٌ', translit: 'yawma\'idhin waajifah' },
+                    { arabic: 'خَيْرًا يَرَهُ', translit: 'khayran yarahu' },
+                    { arabic: 'وَيْلٌ يَوْمَئِذٍ', translit: 'waylun yawma\'idhin' },
+                    { arabic: 'دَافِقٍ يَخْرُجُ', translit: 'daafiqin yakhruju' },
+                    { arabic: 'أَنْ يَشَآءَ', translit: 'an yashaa\'a' },
+                    { arabic: 'فَمَنْ يَعْمَلْ', translit: 'fa man ya\'mal' },
+                    { arabic: 'وَإِنْ يُرِيدُوا', translit: 'wa in yureedoo' },
+                    { arabic: 'إِنْ يَنْصُرْكُمْ', translit: 'in yansurkum' }
+                ]
+            },
+            27: {
+                title: 'Noon Sakin Rules',
+                arabicTitle: 'أَحْكَام النُّون السَّاكِنَة',
+                description: 'When Noon Sakin or Tanween meets certain letters, the sound changes',
+                kidTip: 'The "n" sound hides or merges with the next letter!',
+                type: 'noon-rules',
+                exercises: [
+                    { arabic: 'مِنْ بَعْدِ', translit: 'mim ba\'di' },
+                    { arabic: 'بِالْجُنْبِ', translit: 'bil junbi' },
+                    { arabic: 'لِيُنْبَذَنَّ', translit: 'li yunbadhanna' },
+                    { arabic: 'ذَنْبٍ', translit: 'dhambin' },
+                    { arabic: 'أَنْبِيَآءَ', translit: 'ambiyaa\'a' },
+                    { arabic: 'مِنْ بَخِلَ', translit: 'mam bakhila' },
+                    { arabic: 'مِنْ بَيْنِ', translit: 'mim bayni' },
+                    { arabic: 'أَنْبَتْنَا', translit: 'ambatnaa' },
+                    { arabic: 'لَنَسْفَعًا بِالنَّاصِيَةِ', translit: 'lanasfa\'am bin naasiyah' },
+                    { arabic: 'خَبِيرٌ بِمَا تَعْمَلُونَ', translit: 'khabeerum bimaa ta\'maloon' },
+                    { arabic: 'أَبَدًا اِبْمَا', translit: 'abadan ibmaa' },
+                    { arabic: 'عَلِيمٌ بِهِ', translit: '\'aleemum bihi' },
+                    { arabic: 'سَوَآءٌ بَيْنَنَا', translit: 'sawaa\'um baynanaa' }
+                ]
+            },
+            28: {
+                title: 'More Noon Rules',
+                arabicTitle: 'المَزِيد مِنْ أَحْكَام النُّون',
+                description: 'Continue practicing Noon Sakin rules in context',
+                kidTip: 'Listen for how the "n" sound changes!',
+                type: 'noon-rules',
+                exercises: [
+                    { arabic: 'قَدِيرٌ اِلَّذِي', translit: 'qadeerun illadhee' },
+                    { arabic: 'لَهَمْزَةٌ اِلَّذِي', translit: 'lahumazatun illadhee' },
+                    { arabic: 'نُوحٌ لِإِبْنِهِ', translit: 'noohul libnihi' },
+                    { arabic: 'خَيْرًا الْوَصِيَّةُ', translit: 'khayran il wasiyyah' },
+                    { arabic: 'شَيْئًا اِتَّخَذَهَا', translit: 'shay\'an ittakhadhahaa' }
+                ]
+            },
+            29: {
+                title: 'Waqf (Stopping)',
+                arabicTitle: 'الوَقْف',
+                description: 'Practice stopping at the end of verses with proper pronunciation',
+                kidTip: 'When you see the stop sign (ۚ ۖ ۗ), pause and breathe!',
+                type: 'waqf',
+                exercises: [
+                    { arabic: 'أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ ۝', translit: 'a\'oodhu billaahi minash shaytaanir rajeem' },
+                    { arabic: 'قُلْ هُوَ اللهُ أَحَدٌ ۝', translit: 'qul huwallaahu ahad' },
+                    { arabic: 'مِنْ خَوْفٍ ۝ وَجَنَّتٍ', translit: 'min khawf, wa jannatin' },
+                    { arabic: 'الْفَافَا ۝ إِذَا حَسَدَ ۝', translit: 'al faafaa, idhaa hasad' },
+                    { arabic: 'لِمَا يُرِيدُ ۝ بِأَصْحَبِ', translit: 'limaa yureed, bi ashaabi' },
+                    { arabic: 'الْفِيلِ ۝ أَبِي لَهَبَ وَتَبَّ ۝', translit: 'al feel, abee lahab wa tabb' },
+                    { arabic: 'لِمَنْ خَشِيَ رَبَّهُ ۝', translit: 'liman khashiya rabbahu' },
+                    { arabic: 'لِتَعْجَلَ بِهِ ۝ إِنَّهُ كَانَ تَوَّابًا ۝', translit: 'lita\'jala bihi, innahu kaana tawwaabaa' },
+                    { arabic: 'وَشَاهِدٍ وَّ', translit: 'wa shaahidiw wa' },
+                    { arabic: 'مَشْهُودٍ ۝', translit: 'mashhood' },
+                    { arabic: 'مِنْهُمْ تُقَةً ۞ ذُرِّيَّةً طَيِّبَةً ۞', translit: 'minhum tuqah, dhurriyyatan tayyibah' }
+                ]
+            },
+            30: {
+                title: 'Huroof Muqatta\'at',
+                arabicTitle: 'الحُرُوف المُقَطَّعَات',
+                symbol: 'الٓمٓ',
+                description: 'The mysterious letters at the start of some Surahs - read each letter separately',
+                kidTip: 'Spell out each letter with its stretched sound!',
+                type: 'muqattaat',
+                exercises: [
+                    { arabic: 'الٓمٓ', translit: 'Alif-Laam-Meem' },
+                    { arabic: 'الٓمٓصٓ', translit: 'Alif-Laam-Meem-Saad' },
+                    { arabic: 'الٓرٰ', translit: 'Alif-Laam-Raa' },
+                    { arabic: 'الٓمٓرٰ', translit: 'Alif-Laam-Meem-Raa' },
+                    { arabic: 'كٓهٰيٰعٓصٓ', translit: 'Kaaf-Haa-Yaa-\'Ayn-Saad' },
+                    { arabic: 'طٰهٰ', translit: 'Taa-Haa' },
+                    { arabic: 'طٰسٓمٓ', translit: 'Taa-Seen-Meem' },
+                    { arabic: 'طٰسٓ', translit: 'Taa-Seen' },
+                    { arabic: 'يٰسٓ', translit: 'Yaa-Seen' },
+                    { arabic: 'صٓ', translit: 'Saad' },
+                    { arabic: 'حٰمٓ', translit: 'Haa-Meem' },
+                    { arabic: 'عٓسٓقٓ', translit: '\'Ayn-Seen-Qaaf' },
+                    { arabic: 'قٓ', translit: 'Qaaf' },
+                    { arabic: 'نٓ', translit: 'Noon' }
+                ]
+            }
+        };
+
+        // =====================================================
+        // APP STATE
+        // =====================================================
+
+        let currentLesson = 3;
+        let practiceItems = new Set();
+        let shuffleMode = false;
+        let completedLessons = new Set();
+        let exerciseChunk = 0;
+        const CHUNK_SIZE = 10;
+
+        // Long press handling
+        const LONG_PRESS_DURATION = 500;
+        let pressTimer = null;
+        let currentPressedCard = null;
+
+        // Practice mode
+        let practiceIndex = 0;
+        let practiceArray = [];
+
+        // =====================================================
+        // INITIALIZATION
+        // =====================================================
+
+        function init() {
+            renderLessonNav();
+            renderLesson(currentLesson);
+            setupEventListeners();
+            loadProgress();
+        }
+
+        function loadProgress() {
+            try {
+                const saved = localStorage.getItem('qaidaProgress');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    completedLessons = new Set(data.completed || []);
+                    updateLessonNavProgress();
+                }
+            } catch (e) {
+                console.log('No saved progress');
+            }
+        }
+
+        function saveProgress() {
+            try {
+                localStorage.setItem('qaidaProgress', JSON.stringify({
+                    completed: Array.from(completedLessons)
+                }));
+            } catch (e) {
+                console.log('Could not save progress');
+            }
+        }
+
+        // =====================================================
+        // LESSON NAVIGATION
+        // =====================================================
+
+        function renderLessonNav() {
+            const nav = document.getElementById('lessonsNav');
+            const lessonNums = Object.keys(lessons).map(Number).sort((a, b) => a - b);
+
+            nav.innerHTML = lessonNums.map(num => `
+                <button class="lesson-tab ${num === currentLesson ? 'active' : ''} ${completedLessons.has(num) ? 'completed' : ''}"
+                        data-lesson="${num}">
+                    ${num}. ${lessons[num].title}
+                </button>
+            `).join('');
+        }
+
+        function updateLessonNavProgress() {
+            document.querySelectorAll('.lesson-tab').forEach(tab => {
+                const num = parseInt(tab.dataset.lesson);
+                if (completedLessons.has(num)) {
+                    tab.classList.add('completed');
+                }
+            });
+        }
+
+        // =====================================================
+        // LESSON RENDERING
+        // =====================================================
+
+        function renderLesson(lessonNum) {
+            currentLesson = lessonNum;
+            exerciseChunk = 0;
+            const lesson = lessons[lessonNum];
+            const content = document.getElementById('lessonContent');
+
+            // Update nav
+            document.querySelectorAll('.lesson-tab').forEach(tab => {
+                tab.classList.toggle('active', parseInt(tab.dataset.lesson) === lessonNum);
+            });
+
+            let html = `
+                <div class="lesson-header">
+                    <h2>Lesson ${lessonNum}: ${lesson.title}</h2>
+                    ${lesson.arabicTitle ? `<div class="arabic-title">${lesson.arabicTitle}</div>` : ''}
+                    <p class="description">${lesson.description}</p>
+                    ${lesson.kidTip ? `<div class="kid-tip">${lesson.kidTip}</div>` : ''}
+                </div>
+            `;
+
+            // Symbol intro card for haraka lessons
+            if (lesson.symbol) {
+                html += `
+                    <div class="symbol-card">
+                        <div class="symbol">${lesson.symbol}</div>
+                        <p>This is the ${lesson.title} symbol</p>
+                    </div>
+                `;
+            }
+
+            // Letters grid (for lessons that show all letters with haraka)
+            if (lesson.type === 'haraka' || lesson.type === 'tanween') {
+                html += `
+                    <div class="section-header">
+                        <h3>Letters with ${lesson.title}</h3>
+                    </div>
+                    <div class="card-grid" id="lettersGrid"></div>
+                `;
+            }
+
+            // Custom letters grid (for madd, etc.)
+            if (lesson.letters) {
+                html += `
+                    <div class="section-header">
+                        <h3>Practice Sounds</h3>
+                    </div>
+                    <div class="card-grid" id="lettersGrid"></div>
+                `;
+            }
+
+            // Exercises
+            if (lesson.exercises && lesson.exercises.length > 0) {
+                const totalChunks = Math.ceil(lesson.exercises.length / CHUNK_SIZE);
+                html += `
+                    <div class="section-header">
+                        <h3>Exercises</h3>
+                        ${totalChunks > 1 ? `
+                            <div class="chunk-nav">
+                                <button id="prevChunk" ${exerciseChunk === 0 ? 'disabled' : ''}>←</button>
+                                <span id="chunkIndicator">${exerciseChunk + 1}/${totalChunks}</span>
+                                <button id="nextChunk" ${exerciseChunk >= totalChunks - 1 ? 'disabled' : ''}>→</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="card-grid exercise-grid" id="exerciseGrid"></div>
+                `;
+            }
+
+            // Mark complete button
+            html += `
+                <button class="lesson-complete-btn" id="completeBtn">
+                    ${completedLessons.has(lessonNum) ? '✓ Completed - Review Again' : 'Mark as Complete'}
+                </button>
+            `;
+
+            content.innerHTML = html;
+
+            // Render grids
+            if (lesson.type === 'haraka' || lesson.type === 'tanween') {
+                renderHarakaGrid(lesson);
+            } else if (lesson.letters) {
+                renderCustomLettersGrid(lesson);
+            }
+
+            if (lesson.exercises) {
+                renderExerciseGrid(lesson);
+            }
+
+            // Setup chunk navigation
+            setupChunkNav(lesson);
+
+            // Setup complete button
+            document.getElementById('completeBtn').addEventListener('click', () => {
+                completedLessons.add(lessonNum);
+                saveProgress();
+                updateLessonNavProgress();
+                document.getElementById('completeBtn').textContent = '✓ Completed - Review Again';
+            });
+        }
+
+        function renderHarakaGrid(lesson) {
+            const grid = document.getElementById('lettersGrid');
+            if (!grid) return;
+
+            const letters = arabicLetters.filter(l => l.letter !== 'ا' || lesson.type === 'tanween');
+
+            grid.innerHTML = letters.map((item, index) => {
+                const arabic = item.letter + lesson.haraka;
+                const id = `${currentLesson}-letter-${index}`;
+                return createCard(id, arabic, item.name.toLowerCase() + lesson.sound);
+            }).join('');
+
+            setupCardInteractions(grid);
+        }
+
+        function renderCustomLettersGrid(lesson) {
+            const grid = document.getElementById('lettersGrid');
+            if (!grid) return;
+
+            grid.innerHTML = lesson.letters.map((item, index) => {
+                const id = `${currentLesson}-custom-${index}`;
+                return createCard(id, item.arabic, item.translit);
+            }).join('');
+
+            setupCardInteractions(grid);
+        }
+
+        function renderExerciseGrid(lesson) {
+            const grid = document.getElementById('exerciseGrid');
+            if (!grid) return;
+
+            let exercises = [...lesson.exercises];
+
+            if (shuffleMode) {
+                exercises = shuffleArray(exercises);
+            }
+
+            const start = exerciseChunk * CHUNK_SIZE;
+            const end = Math.min(start + CHUNK_SIZE, exercises.length);
+            const chunk = exercises.slice(start, end);
+
+            grid.innerHTML = chunk.map((item, index) => {
+                const id = `${currentLesson}-ex-${start + index}`;
+                return createCard(id, item.arabic, item.translit, true);
+            }).join('');
+
+            setupCardInteractions(grid);
+        }
+
+        function createCard(id, arabic, translit, isExercise = false) {
+            const needsPractice = practiceItems.has(id);
+            return `
+                <div class="card ${isExercise ? 'exercise-card' : ''} ${needsPractice ? 'needs-practice' : ''}"
+                     data-id="${id}" data-translit="${translit}">
+                    <div class="arabic">${arabic}</div>
+                    <div class="translit">${translit}</div>
+                    <div class="press-indicator"></div>
+                </div>
+            `;
+        }
+
+        function setupChunkNav(lesson) {
+            const prevBtn = document.getElementById('prevChunk');
+            const nextBtn = document.getElementById('nextChunk');
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (exerciseChunk > 0) {
+                        exerciseChunk--;
+                        renderExerciseGrid(lesson);
+                        updateChunkIndicator(lesson);
+                        setupChunkNav(lesson);
+                    }
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    const totalChunks = Math.ceil(lesson.exercises.length / CHUNK_SIZE);
+                    if (exerciseChunk < totalChunks - 1) {
+                        exerciseChunk++;
+                        renderExerciseGrid(lesson);
+                        updateChunkIndicator(lesson);
+                        setupChunkNav(lesson);
+                    }
+                });
+            }
+        }
+
+        function updateChunkIndicator(lesson) {
+            const indicator = document.getElementById('chunkIndicator');
+            const prevBtn = document.getElementById('prevChunk');
+            const nextBtn = document.getElementById('nextChunk');
+
+            if (indicator && lesson.exercises) {
+                const totalChunks = Math.ceil(lesson.exercises.length / CHUNK_SIZE);
+                indicator.textContent = `${exerciseChunk + 1}/${totalChunks}`;
+
+                if (prevBtn) prevBtn.disabled = exerciseChunk === 0;
+                if (nextBtn) nextBtn.disabled = exerciseChunk >= totalChunks - 1;
+            }
+        }
+
+        // =====================================================
+        // CARD INTERACTIONS
+        // =====================================================
+
+        function setupCardInteractions(container) {
+            const cards = container.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                // Tap to reveal transliteration
+                card.addEventListener('click', (e) => {
+                    if (!card.classList.contains('pressing')) {
+                        card.classList.toggle('show-translit');
+                        // Auto-hide after 2 seconds
+                        if (card.classList.contains('show-translit')) {
+                            setTimeout(() => {
+                                card.classList.remove('show-translit');
+                            }, 2000);
+                        }
+                    }
+                });
+
+                // Long press for practice marking
+                card.addEventListener('mousedown', (e) => startPress(card, e));
+                card.addEventListener('mouseup', () => endPress(card));
+                card.addEventListener('mouseleave', () => cancelPress(card));
+
+                card.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    startPress(card, e);
+                }, { passive: false });
+                card.addEventListener('touchend', () => endPress(card));
+                card.addEventListener('touchcancel', () => cancelPress(card));
+            });
+        }
+
+        function startPress(card, e) {
+            currentPressedCard = card;
+            card.classList.add('pressing');
+
+            pressTimer = setTimeout(() => {
+                togglePractice(card);
+                card.classList.remove('pressing');
+                currentPressedCard = null;
+            }, LONG_PRESS_DURATION);
+        }
+
+        function endPress(card) {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
+            card.classList.remove('pressing');
+            currentPressedCard = null;
+        }
+
+        function cancelPress(card) {
+            if (pressTimer) {
+                clearTimeout(pressTimer);
+                pressTimer = null;
+            }
+            card.classList.remove('pressing');
+            currentPressedCard = null;
+        }
+
+        function togglePractice(card) {
+            const id = card.dataset.id;
+
+            if (practiceItems.has(id)) {
+                practiceItems.delete(id);
+                card.classList.remove('needs-practice');
+            } else {
+                practiceItems.add(id);
+                card.classList.add('needs-practice');
+            }
+
+            updatePracticeCount();
+        }
+
+        function updatePracticeCount() {
+            const count = practiceItems.size;
+            document.getElementById('practiceCount').textContent = count;
+            document.getElementById('practiceBtn').disabled = count === 0;
+        }
+
+        // =====================================================
+        // PRACTICE MODE
+        // =====================================================
+
+        function openPracticeMode() {
+            if (practiceItems.size === 0) return;
+
+            practiceArray = Array.from(practiceItems);
+            practiceIndex = 0;
+
+            document.getElementById('practiceMode').classList.add('active');
+            renderPracticeCard();
+        }
+
+        function closePracticeMode() {
+            document.getElementById('practiceMode').classList.remove('active');
+        }
+
+        function renderPracticeCard() {
+            if (practiceArray.length === 0) {
+                closePracticeMode();
+                return;
+            }
+
+            const id = practiceArray[practiceIndex];
+            const card = document.querySelector(`[data-id="${id}"]`);
+
+            let arabic = '';
+            let translit = '';
+
+            if (card) {
+                arabic = card.querySelector('.arabic').textContent;
+                translit = card.dataset.translit;
+            } else {
+                // Card might not be rendered (different lesson), find from data
+                const parts = id.split('-');
+                const lessonNum = parseInt(parts[0]);
+                const lesson = lessons[lessonNum];
+
+                if (parts[1] === 'letter') {
+                    const idx = parseInt(parts[2]);
+                    const letter = arabicLetters[idx];
+                    arabic = letter.letter + lesson.haraka;
+                    translit = letter.name.toLowerCase() + lesson.sound;
+                } else if (parts[1] === 'ex') {
+                    const idx = parseInt(parts[2]);
+                    arabic = lesson.exercises[idx].arabic;
+                    translit = lesson.exercises[idx].translit;
+                } else if (parts[1] === 'custom') {
+                    const idx = parseInt(parts[2]);
+                    arabic = lesson.letters[idx].arabic;
+                    translit = lesson.letters[idx].translit;
+                }
+            }
+
+            document.getElementById('practiceArabic').textContent = arabic;
+            document.getElementById('practiceTranslit').textContent = translit;
+            document.getElementById('practiceTranslit').style.opacity = '0';
+            document.getElementById('practiceProgress').textContent = `${practiceIndex + 1} of ${practiceArray.length}`;
+
+            // Update nav buttons
+            document.getElementById('practicePrev').disabled = practiceIndex === 0;
+            document.getElementById('practiceNext').disabled = practiceIndex >= practiceArray.length - 1;
+        }
+
+        function practiceNext() {
+            if (practiceIndex < practiceArray.length - 1) {
+                practiceIndex++;
+                renderPracticeCard();
+            }
+        }
+
+        function practicePrev() {
+            if (practiceIndex > 0) {
+                practiceIndex--;
+                renderPracticeCard();
+            }
+        }
+
+        function unmarkCurrentPractice() {
+            const id = practiceArray[practiceIndex];
+            practiceItems.delete(id);
+
+            // Update the card if visible
+            const card = document.querySelector(`[data-id="${id}"]`);
+            if (card) {
+                card.classList.remove('needs-practice');
+            }
+
+            // Remove from practice array
+            practiceArray.splice(practiceIndex, 1);
+
+            // Adjust index if needed
+            if (practiceIndex >= practiceArray.length) {
+                practiceIndex = Math.max(0, practiceArray.length - 1);
+            }
+
+            updatePracticeCount();
+
+            if (practiceArray.length === 0) {
+                closePracticeMode();
+            } else {
+                renderPracticeCard();
+            }
+        }
+
+        // =====================================================
+        // EVENT LISTENERS
+        // =====================================================
+
+        function setupEventListeners() {
+            // Lesson navigation
+            document.getElementById('lessonsNav').addEventListener('click', (e) => {
+                if (e.target.classList.contains('lesson-tab')) {
+                    renderLesson(parseInt(e.target.dataset.lesson));
+                }
+            });
+
+            // Shuffle toggle
+            document.getElementById('shuffleBtn').addEventListener('click', () => {
+                shuffleMode = !shuffleMode;
+                document.getElementById('shuffleBtn').classList.toggle('active', shuffleMode);
+                renderLesson(currentLesson);
+            });
+
+            // Practice mode
+            document.getElementById('practiceBtn').addEventListener('click', openPracticeMode);
+            document.getElementById('practiceExit').addEventListener('click', closePracticeMode);
+            document.getElementById('practiceNext').addEventListener('click', practiceNext);
+            document.getElementById('practicePrev').addEventListener('click', practicePrev);
+            document.getElementById('unmarkBtn').addEventListener('click', unmarkCurrentPractice);
+
+            // Tap practice card to show transliteration
+            document.getElementById('practiceCard').addEventListener('click', (e) => {
+                if (e.target.id !== 'unmarkBtn') {
+                    const translit = document.getElementById('practiceTranslit');
+                    translit.style.opacity = translit.style.opacity === '1' ? '0' : '1';
+                }
+            });
+
+            // Keyboard navigation in practice mode
+            document.addEventListener('keydown', (e) => {
+                if (!document.getElementById('practiceMode').classList.contains('active')) return;
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    practiceNext();
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    practicePrev();
+                } else if (e.key === 'Escape') {
+                    closePracticeMode();
+                } else if (e.key === ' ') {
+                    e.preventDefault();
+                    const translit = document.getElementById('practiceTranslit');
+                    translit.style.opacity = translit.style.opacity === '1' ? '0' : '1';
+                }
+            });
+        }
+
+        // =====================================================
+        // UTILITIES
+        // =====================================================
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // =====================================================
+        // START APP
+        // =====================================================
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
