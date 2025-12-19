@@ -8,10 +8,11 @@ Interactive Qaida app for a 6-year-old learning Arabic (non-native speaker) to p
 
 - **Single HTML file** - No build process, just serve and use
 - **Progress tracking** - Completed lessons saved to localStorage
-- **Tap-to-reveal transliteration** - Hidden by default so child learns Arabic, not English
-- **Long-press to mark practice items** - Visual bookmark for items child struggles with
+- **Explicit icon actions** - Speaker icon for audio, star icon for bookmarking (replaced tap/hold)
+- **Tap card = show transliteration** - Safe exploration without accidental sounds
 - **RTL layout** - Arabic reads right-to-left
-- **Removed letter forms lesson** - User didn't want isolated/initial/medial/final forms displayed
+- **Grouped lesson navigation** - 29 lessons organized into 7 collapsible categories
+- **PWA support** - Installable, works offline
 
 ## Ahsanul Qawaid Curriculum Reference
 
@@ -66,3 +67,19 @@ Note: Licensing unclear for most resources. For proper tajweed pronunciation, re
 - Added child-friendly "kidTip" explanations for each lesson
 - Added progress tracking via localStorage
 - Deployed to GitHub Pages
+
+**2025-12-19:** Major UX overhaul
+- Added Lesson 1 (Arabic Alphabet) with all 29 letters
+- Renumbered lessons sequentially (1-29)
+- Fixed Alif transliteration (added `sound` property to letters array)
+- Added Web Speech API for TTS audio
+- **Replaced tap/hold with explicit icons:**
+  - 🔊 Speaker icon = play audio
+  - ⭐ Star icon = bookmark for practice
+  - Tap card = show transliteration (safe exploration)
+- Grouped lessons into 7 collapsible categories with progress tracking
+- Added onboarding overlay for first-time users
+- Added celebration animation (confetti) on lesson completion
+- Fixed practice mode: separate Hear/Show/Remove buttons below card
+- Added PWA support (manifest.json, sw.js) for offline use
+- Updated footer with icon legend
