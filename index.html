@@ -2566,28 +2566,17 @@
                 currentAudio.pause();
                 currentAudio = null;
             }
-            speechSynthesis.cancel();
 
-            // Try to use pre-recorded audio file first
+            // Only use pre-recorded audio files (no TTS fallback)
             const audioFile = getAudioFilename(text);
             if (audioFile) {
                 currentAudio = new Audio(audioFile);
                 currentAudio.play().catch(err => {
-                    console.log('Audio file failed, falling back to TTS:', err);
-                    speakWithTTS(text);
+                    console.log('Audio file not available:', text, err);
                 });
-                return;
+            } else {
+                console.log('No audio file for:', text);
             }
-
-            // Fall back to browser TTS
-            speakWithTTS(text);
-        }
-
-        function speakWithTTS(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ar';
-            utterance.rate = 0.8; // Slightly slower for learning
-            speechSynthesis.speak(utterance);
         }
 
         function canSpeakArabic() {
