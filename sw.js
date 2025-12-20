@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qaida-v1';
+const CACHE_NAME = 'qaida-v4';
 const ASSETS = [
   '/',
   '/index.html',

@@ -176,57 +176,6 @@
             z-index: 1;
         }
 
-        /* Lesson Navigation */
-        .lessons-nav {
-            display: flex;
-            gap: 0.4rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .lesson-tab {
-            padding: 0.5rem 0.8rem;
-            border: none;
-            background: var(--white);
-            border-radius: var(--radius-round);
-            font-family: 'Quicksand', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-soft);
-            position: relative;
-        }
-
-        .lesson-tab:hover {
-            background: var(--bg-warm);
-            color: var(--teal-deep);
-            transform: translateY(-2px);
-        }
-
-        .lesson-tab.active {
-            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
-            color: var(--white);
-        }
-
-        .lesson-tab.completed::after {
-            content: '✓';
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--teal-light);
-            color: white;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            font-size: 0.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         /* Lesson Header */
         .lesson-header {
             text-align: center;
@@ -745,11 +694,6 @@
             .practice-card {
                 padding: 2rem;
             }
-
-            .lesson-tab {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.7rem;
-            }
         }
 
         /* Animations */
@@ -942,61 +886,198 @@
         }
 
         /* ==================== */
-        /* LESSON GROUPS        */
+        /* COMPACT LESSON NAV   */
         /* ==================== */
-        .lesson-groups {
-            padding: 0.5rem 1rem;
-        }
-
-        .lesson-group {
-            margin-bottom: 0.75rem;
-        }
-
-        .lesson-group-header {
+        .lesson-nav-compact {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0.75rem 1rem;
-            background: var(--teal-deep);
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+        }
+
+        .nav-arrow {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             color: white;
-            border-radius: 12px;
+            font-size: 0.9rem;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .lesson-number {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .hamburger-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .hamburger-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* ==================== */
+        /* SLIDE-OUT MENU       */
+        /* ==================== */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 150;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lesson-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            max-width: 80vw;
+            height: 100%;
+            background: var(--white);
+            z-index: 160;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+        }
+
+        .lesson-menu.open {
+            transform: translateX(0);
+        }
+
+        .lesson-menu-header {
+            background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-light) 100%);
+            color: white;
+            padding: 1.25rem 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lesson-menu-list {
+            padding: 0.5rem 0;
+        }
+
+        .lesson-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .lesson-menu-item:hover {
+            background: var(--bg-warm);
+        }
+
+        .lesson-menu-item.active {
+            background: linear-gradient(135deg, rgba(26, 107, 107, 0.1) 0%, rgba(42, 157, 143, 0.1) 100%);
+            border-left: 3px solid var(--teal-deep);
             font-weight: 600;
         }
 
-        .lesson-group-header:hover {
-            background: var(--teal-light);
-        }
-
-        .lesson-group-icon {
-            font-size: 1.25rem;
-            margin-right: 0.5rem;
-        }
-
-        .lesson-group-progress {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        .lesson-group-items {
-            display: none;
-            padding: 0.5rem;
-            background: rgba(255,255,255,0.5);
-            border-radius: 0 0 12px 12px;
-            margin-top: -8px;
-            padding-top: 16px;
-        }
-
-        .lesson-group.expanded .lesson-group-items {
+        .lesson-menu-item .lesson-num {
+            width: 28px;
+            height: 28px;
+            background: var(--bg-warm);
+            border-radius: 50%;
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.75rem;
+            color: var(--text-muted);
         }
 
-        .lesson-group-items .lesson-tab {
-            flex: 0 0 auto;
-            font-size: 0.85rem;
-            padding: 0.5rem 1rem;
+        .lesson-menu-item.active .lesson-num {
+            background: var(--teal-deep);
+            color: white;
+        }
+
+        .lesson-menu-item.completed .lesson-num {
+            background: var(--teal-light);
+            color: white;
+        }
+
+        .lesson-menu-item.completed .lesson-num::after {
+            content: '\\2713';
+        }
+
+        .lesson-menu-item.completed:not(.active) .lesson-num {
+            font-size: 0;
+        }
+
+        .lesson-menu-item.completed:not(.active) .lesson-num::after {
+            font-size: 0.8rem;
+        }
+
+        .lesson-menu-item .lesson-name {
+            flex: 1;
         }
 
         /* ==================== */
@@ -1138,6 +1219,11 @@
                     <h1>Ahsanul Qawaid</h1>
                 </div>
             </div>
+            <div class="lesson-nav-compact">
+                <button class="nav-arrow" id="prevLesson" title="Previous lesson">&#9664;</button>
+                <span class="lesson-number" id="lessonNumber">1 / 29</span>
+                <button class="nav-arrow" id="nextLesson" title="Next lesson">&#9654;</button>
+            </div>
             <div class="header-actions">
                 <button class="shuffle-btn" id="shuffleBtn" title="Shuffle exercises">
                     <span>🔀</span> Shuffle
@@ -1146,12 +1232,22 @@
                     <span>Practice</span>
                     <span class="count" id="practiceCount">0</span>
                 </button>
+                <button class="hamburger-btn" id="menuToggle" title="All lessons">&#9776;</button>
             </div>
         </div>
     </header>
 
+    <!-- Slide-out Lesson Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <nav class="lesson-menu" id="lessonMenu">
+        <div class="lesson-menu-header">
+            <span>All Lessons</span>
+            <button class="menu-close" id="menuClose">&#10005;</button>
+        </div>
+        <div class="lesson-menu-list" id="lessonMenuList"></div>
+    </nav>
+
     <main class="main">
-        <nav class="lessons-nav" id="lessonsNav"></nav>
         <div id="lessonContent"></div>
     </main>
 
@@ -2150,51 +2246,75 @@
             { name: 'Advanced Rules', icon: '🎓', lessons: [20, 21, 22, 23, 24, 25, 26, 27, 28, 29] }
         ];
 
+        const TOTAL_LESSONS = 29;
+
         function renderLessonNav() {
-            const nav = document.getElementById('lessonsNav');
+            // Update compact header nav
+            document.getElementById('lessonNumber').textContent = `${currentLesson} / ${TOTAL_LESSONS}`;
+            document.getElementById('prevLesson').disabled = currentLesson <= 1;
+            document.getElementById('nextLesson').disabled = currentLesson >= TOTAL_LESSONS;
 
-            nav.innerHTML = `<div class="lesson-groups">${lessonGroups.map((group, groupIdx) => {
-                const completedInGroup = group.lessons.filter(l => completedLessons.has(l)).length;
-                const totalInGroup = group.lessons.length;
-                const isCurrentGroupActive = group.lessons.includes(currentLesson);
+            // Update slide-out menu
+            renderLessonMenu();
+        }
 
-                return `
-                    <div class="lesson-group ${isCurrentGroupActive ? 'expanded' : ''}" data-group="${groupIdx}">
-                        <div class="lesson-group-header">
-                            <span>
-                                <span class="lesson-group-icon">${group.icon}</span>
-                                ${group.name}
-                            </span>
-                            <span class="lesson-group-progress">${completedInGroup}/${totalInGroup} ✓</span>
-                        </div>
-                        <div class="lesson-group-items">
-                            ${group.lessons.map(num => `
-                                <button class="lesson-tab ${num === currentLesson ? 'active' : ''} ${completedLessons.has(num) ? 'completed' : ''}"
-                                        data-lesson="${num}">
-                                    ${lessons[num].title}
-                                </button>
-                            `).join('')}
-                        </div>
-                    </div>
+        function renderLessonMenu() {
+            const menuList = document.getElementById('lessonMenuList');
+
+            // Build flat list of all lessons with their titles
+            let menuHTML = '';
+            for (let i = 1; i <= TOTAL_LESSONS; i++) {
+                const lesson = lessons[i];
+                const isActive = i === currentLesson;
+                const isCompleted = completedLessons.has(i);
+
+                menuHTML += `
+                    <button class="lesson-menu-item ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}"
+                            data-lesson="${i}">
+                        <span class="lesson-num">${isCompleted && !isActive ? '' : i}</span>
+                        <span class="lesson-name">${lesson.title}</span>
+                    </button>
                 `;
-            }).join('')}</div>`;
+            }
 
-            // Setup group toggle handlers
-            nav.querySelectorAll('.lesson-group-header').forEach(header => {
-                header.addEventListener('click', (e) => {
-                    const group = header.closest('.lesson-group');
-                    group.classList.toggle('expanded');
-                });
-            });
+            menuList.innerHTML = menuHTML;
+        }
+
+        function openLessonMenu() {
+            document.getElementById('lessonMenu').classList.add('open');
+            document.getElementById('menuOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            // Scroll to active lesson
+            setTimeout(() => {
+                const activeItem = document.querySelector('.lesson-menu-item.active');
+                if (activeItem) {
+                    activeItem.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        function closeLessonMenu() {
+            document.getElementById('lessonMenu').classList.remove('open');
+            document.getElementById('menuOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function goToPrevLesson() {
+            if (currentLesson > 1) {
+                renderLesson(currentLesson - 1);
+            }
+        }
+
+        function goToNextLesson() {
+            if (currentLesson < TOTAL_LESSONS) {
+                renderLesson(currentLesson + 1);
+            }
         }
 
         function updateLessonNavProgress() {
-            document.querySelectorAll('.lesson-tab').forEach(tab => {
-                const num = parseInt(tab.dataset.lesson);
-                if (completedLessons.has(num)) {
-                    tab.classList.add('completed');
-                }
-            });
+            // Re-render the menu to show completion status
+            renderLessonMenu();
         }
 
         // =====================================================
@@ -2207,10 +2327,8 @@
             const lesson = lessons[lessonNum];
             const content = document.getElementById('lessonContent');
 
-            // Update nav
-            document.querySelectorAll('.lesson-tab').forEach(tab => {
-                tab.classList.toggle('active', parseInt(tab.dataset.lesson) === lessonNum);
-            });
+            // Update compact nav and menu
+            renderLessonNav();
 
             let html = `
                 <div class="lesson-header">
@@ -2399,10 +2517,12 @@
         }
 
         // =====================================================
-        // TEXT-TO-SPEECH
+        // TEXT-TO-SPEECH (with ElevenLabs audio files)
         // =====================================================
 
         let hasArabicVoice = false;
+        let audioMapping = {};
+        let currentAudio = null;
 
         function initTTS() {
             const checkVoices = () => {
@@ -2415,21 +2535,63 @@
                 speechSynthesis.onvoiceschanged = checkVoices;
             }
             checkVoices();
+
+            // Load audio mapping for pre-recorded files
+            loadAudioMapping();
+        }
+
+        async function loadAudioMapping() {
+            try {
+                const response = await fetch('audio-mapping.json');
+                if (response.ok) {
+                    audioMapping = await response.json();
+                    console.log('Loaded audio mapping:', Object.keys(audioMapping).length, 'sounds');
+                }
+            } catch (e) {
+                console.log('No audio mapping found, using TTS fallback');
+            }
+        }
+
+        function getAudioFilename(text) {
+            // Check if we have a pre-recorded file for this text
+            if (audioMapping[text]) {
+                return 'audio/' + audioMapping[text];
+            }
+            return null;
         }
 
         function speakArabic(text) {
-            // Cancel any ongoing speech
+            // Stop any currently playing audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
             speechSynthesis.cancel();
 
+            // Try to use pre-recorded audio file first
+            const audioFile = getAudioFilename(text);
+            if (audioFile) {
+                currentAudio = new Audio(audioFile);
+                currentAudio.play().catch(err => {
+                    console.log('Audio file failed, falling back to TTS:', err);
+                    speakWithTTS(text);
+                });
+                return;
+            }
+
+            // Fall back to browser TTS
+            speakWithTTS(text);
+        }
+
+        function speakWithTTS(text) {
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'ar';
             utterance.rate = 0.8; // Slightly slower for learning
-
             speechSynthesis.speak(utterance);
         }
 
         function canSpeakArabic() {
-            return hasArabicVoice;
+            return hasArabicVoice || Object.keys(audioMapping).length > 0;
         }
 
         function setupChunkNav(lesson) {
@@ -2708,10 +2870,21 @@
         // =====================================================
 
         function setupEventListeners() {
-            // Lesson navigation
-            document.getElementById('lessonsNav').addEventListener('click', (e) => {
-                if (e.target.classList.contains('lesson-tab')) {
-                    renderLesson(parseInt(e.target.dataset.lesson));
+            // Compact header navigation - prev/next
+            document.getElementById('prevLesson').addEventListener('click', goToPrevLesson);
+            document.getElementById('nextLesson').addEventListener('click', goToNextLesson);
+
+            // Hamburger menu toggle
+            document.getElementById('menuToggle').addEventListener('click', openLessonMenu);
+            document.getElementById('menuClose').addEventListener('click', closeLessonMenu);
+            document.getElementById('menuOverlay').addEventListener('click', closeLessonMenu);
+
+            // Menu lesson selection
+            document.getElementById('lessonMenuList').addEventListener('click', (e) => {
+                const item = e.target.closest('.lesson-menu-item');
+                if (item) {
+                    renderLesson(parseInt(item.dataset.lesson));
+                    closeLessonMenu();
                 }
             });
 
