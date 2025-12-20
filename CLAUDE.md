@@ -11,8 +11,9 @@ Interactive Qaida app for a 6-year-old learning Arabic (non-native speaker) to p
 - **Explicit icon actions** - Speaker icon for audio, star icon for bookmarking (replaced tap/hold)
 - **Tap card = show transliteration** - Safe exploration without accidental sounds
 - **RTL layout** - Arabic reads right-to-left
-- **Grouped lesson navigation** - 29 lessons organized into 7 collapsible categories
+- **Compact header navigation** - Lesson number with prev/next arrows, hamburger menu for full list
 - **PWA support** - Installable, works offline
+- **ElevenLabs audio** - Pre-recorded MP3s (no browser TTS fallback)
 
 ## Ahsanul Qawaid Curriculum Reference
 
@@ -25,14 +26,28 @@ Full curriculum has 29 lessons (source: equranschool.com):
 
 **Currently implemented:** Full curriculum - Lessons 3-30 (all content from physical book)
 
-## Audio Resources Found
+## Audio System
 
-For future audio implementation:
-- [Internet Archive - Arabic Alphabet Audio](https://archive.org/details/ArabicAlphabetAudio) - Audio embedded in PDF
-- [Arabic Reading Course](https://www.arabicreadingcourse.com/learn-the-arabic-alphabet.php) - MP3 download available
-- [eQuran School](https://www.equranschool.com/learn-arabic-alphabets) - Streaming audio
+**Current implementation:** ElevenLabs TTS with Hanafi voice (Egyptian educational)
+- Voice ID: `DWMVT5WflKt0P8OPpIrY`
+- Model: `eleven_multilingual_v2`
+- Files stored in `audio/` folder as hex-encoded MP3s
+- Mapping in `audio-mapping.json`
 
-Note: Licensing unclear for most resources. For proper tajweed pronunciation, recording by a teacher may be preferable.
+**Audio coverage:**
+- Lesson 1: 29 letter names (using English transliteration for correct pronunciation)
+- Lesson 2: 16 Fatha exercise words
+- Lessons 3-29: Not yet generated
+
+**Key learning:** ElevenLabs pronounces letter names better with English input ("Laam", "Seen") rather than Arabic script (لَام, سِين)
+
+**Generation scripts (not committed):**
+- `generate-lesson1-english.js` - Letter names
+- `generate-lesson2.js` - Fatha words
+- `generate-all-audio.js` - All 842 sounds (ready to run)
+- `arabic-sounds.json` - Full list of sounds needed
+
+**ElevenLabs free tier:** 10,000 characters/month. Full curriculum ~4,768 characters.
 
 ## Technical Notes
 
@@ -83,3 +98,11 @@ Note: Licensing unclear for most resources. For proper tajweed pronunciation, re
 - Fixed practice mode: separate Hear/Show/Remove buttons below card
 - Added PWA support (manifest.json, sw.js) for offline use
 - Updated footer with icon legend
+
+**2025-12-20:** Audio integration & navigation simplification
+- Replaced grouped lesson navigation with compact header nav (◀ 1/29 ▶)
+- Added hamburger menu (☰) with slide-out lesson list
+- Integrated ElevenLabs audio (Hanafi voice) for Lessons 1-2
+- Lesson 1: Letter names use English transliteration for correct pronunciation
+- Disabled browser TTS fallback - only pre-recorded MP3s play
+- Service worker cache versioning for updates (currently v6)
